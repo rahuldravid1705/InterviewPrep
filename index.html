@@ -1,0 +1,3045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PrepWise — Software Engineering Interview Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;0,900;1,400&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --white: #ffffff;
+  --bg: #f5f4f0;
+  --bg2: #eeede8;
+  --surface: #ffffff;
+  --border: #e2e0d8;
+  --border2: #d4d2c8;
+  --ink: #1a1916;
+  --ink2: #4a4843;
+  --ink3: #9a9890;
+  --accent: #2563eb;
+  --accent-light: #eff4ff;
+  --accent-mid: #dbeafe;
+  --green: #16a34a;
+  --green-light: #f0fdf4;
+  --green-mid: #dcfce7;
+  --amber: #d97706;
+  --amber-light: #fffbeb;
+  --red: #dc2626;
+  --red-light: #fef2f2;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow: 0 4px 16px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.05);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.06);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --sidebar-w: 272px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 15px; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── LAYOUT ── */
+.layout { display: flex; min-height: 100vh; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+  transition: transform 0.28s cubic-bezier(.4,0,.2,1);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar-top {
+  padding: 28px 20px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.brand-icon {
+  width: 36px; height: 36px;
+  background: var(--ink);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+}
+
+.brand-name em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: var(--ink3);
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+}
+
+/* Progress ring */
+.progress-ring-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.ring-svg { flex-shrink: 0; }
+
+.ring-track { fill: none; stroke: var(--border); stroke-width: 4; }
+.ring-fill {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 24px 24px;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.ring-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  fill: var(--ink);
+}
+
+.ring-info { flex: 1; min-width: 0; }
+
+.ring-pct {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.ring-label {
+  font-size: 11px;
+  color: var(--ink3);
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
+
+.ring-sub {
+  font-size: 12px;
+  color: var(--ink2);
+  margin-top: 4px;
+}
+
+/* Nav */
+.sidebar-nav {
+  padding: 16px 12px;
+  flex: 1;
+}
+
+.nav-section-label {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--ink3);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 0 8px;
+  margin-bottom: 6px;
+  margin-top: 16px;
+}
+
+.nav-section-label:first-child { margin-top: 0; }
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--ink2);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  text-align: left;
+  transition: all 0.15s;
+  position: relative;
+  margin-bottom: 1px;
+}
+
+.nav-btn:hover { background: var(--bg); color: var(--ink); }
+
+.nav-btn.active {
+  background: var(--accent-light);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.nav-btn .emoji { width: 22px; text-align: center; font-size: 15px; flex-shrink: 0; }
+.nav-btn .label { flex: 1; }
+
+.nav-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink3);
+  background: var(--bg2);
+  padding: 1px 7px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.nav-btn.active .nav-count {
+  background: var(--accent-mid);
+  color: var(--accent);
+}
+
+.nav-done-count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--green);
+  margin-left: 4px;
+}
+
+/* ── MAIN ── */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* TOPBAR */
+.topbar {
+  position: sticky;
+  top: 0;
+  background: rgba(245,244,240,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 100;
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--ink2);
+}
+
+.search-box {
+  flex: 1;
+  max-width: 480px;
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink3);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 9px 36px 9px 36px;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.search-input::placeholder { color: var(--ink3); }
+.search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,0.08); }
+
+.search-clear {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--ink3);
+  cursor: pointer;
+  font-size: 14px;
+  display: none;
+  line-height: 1;
+  padding: 2px;
+}
+
+.topbar-filters {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.pill:hover { border-color: var(--accent); color: var(--accent); }
+
+.pill.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 52px 40px 40px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-pattern {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 40%;
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-light);
+  border: 1px solid var(--green-mid);
+  color: var(--green);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  color: var(--ink);
+  margin-bottom: 14px;
+  max-width: 580px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-desc {
+  color: var(--ink2);
+  font-size: 15.5px;
+  max-width: 500px;
+  line-height: 1.65;
+  margin-bottom: 32px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  width: fit-content;
+}
+
+.hero-stat {
+  padding: 16px 28px;
+  border-right: 1px solid var(--border);
+  text-align: center;
+}
+
+.hero-stat:last-child { border-right: none; }
+
+.stat-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--ink3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── CONTENT ── */
+.content { padding: 32px 40px 80px; }
+
+/* ── CATEGORY HEADER ── */
+.cat-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.cat-title-block {}
+.cat-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  transition: color 0.15s;
+  display: inline-block;
+}
+.cat-eyebrow:hover { color: var(--accent); }
+
+.cat-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+}
+
+.cat-controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+.btn-ghost {
+  padding: 7px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── CONCEPT GRID ── */
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.concept-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(.4,0,.2,1);
+  position: relative;
+  overflow: hidden;
+  animation: cardIn 0.35s ease both;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.concept-card:nth-child(2) { animation-delay: 0.04s; }
+.concept-card:nth-child(3) { animation-delay: 0.08s; }
+.concept-card:nth-child(4) { animation-delay: 0.12s; }
+.concept-card:nth-child(5) { animation-delay: 0.16s; }
+.concept-card:nth-child(6) { animation-delay: 0.20s; }
+.concept-card:nth-child(7) { animation-delay: 0.24s; }
+
+.concept-card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+}
+
+.concept-card.all-done { border-color: var(--green); }
+.concept-card.all-done .card-progress-line { background: var(--green); }
+
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+
+.card-emoji-wrap {
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+}
+
+.card-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: var(--bg2);
+  color: var(--ink3);
+  border: 1px solid var(--border);
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--ink);
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+.card-desc {
+  font-size: 13px;
+  color: var(--ink3);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.card-progress-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink3);
+}
+
+.card-progress-text.complete { color: var(--green); font-weight: 500; }
+
+.card-progress-wrap { flex: 1; background: var(--bg2); border-radius: 3px; height: 4px; overflow: hidden; }
+
+.card-progress-line {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.card-arrow {
+  color: var(--ink3);
+  font-size: 14px;
+  transition: all 0.18s;
+}
+
+.concept-card:hover .card-arrow { color: var(--accent); transform: translateX(3px); }
+
+/* ── Q&A VIEW ── */
+.qa-view { animation: cardIn 0.3s ease; }
+
+.qa-intro {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.qa-intro-emoji {
+  font-size: 40px;
+  flex-shrink: 0;
+}
+
+.qa-intro-body { flex: 1; min-width: 200px; }
+
+.qa-intro-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.qa-intro-desc { font-size: 13.5px; color: var(--ink2); }
+
+.qa-intro-stats {
+  display: flex;
+  gap: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.qa-stat-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.qa-stat-label {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--ink3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Question cards */
+.q-list { display: flex; flex-direction: column; gap: 12px; }
+
+.q-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.q-card:hover { border-color: var(--border2); box-shadow: var(--shadow-sm); }
+.q-card.read { border-left: 3px solid var(--green); }
+
+.q-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.q-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink3);
+  padding-top: 2px;
+  flex-shrink: 0;
+  min-width: 26px;
+}
+
+.q-body { flex: 1; }
+
+.q-text {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.q-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+.diff-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.diff-easy { background: var(--green-light); color: var(--green); border: 1px solid var(--green-mid); }
+.diff-medium { background: var(--amber-light); color: var(--amber); border: 1px solid #fde68a; }
+.diff-hard { background: var(--red-light); color: var(--red); border: 1px solid #fecaca; }
+
+.q-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+
+.q-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--bg2);
+  color: var(--ink3);
+  border: 1px solid var(--border);
+}
+
+.q-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+.read-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink3);
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+
+.read-btn:hover { border-color: var(--green); color: var(--green); }
+.read-btn.marked { background: var(--green-light); border-color: var(--green); color: var(--green); }
+
+.chevron {
+  color: var(--ink3);
+  font-size: 12px;
+  transition: transform 0.22s;
+  flex-shrink: 0;
+}
+
+.q-card.open .chevron { transform: rotate(180deg); }
+
+/* Answer */
+.q-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.38s cubic-bezier(.4,0,.2,1);
+}
+
+.q-card.open .q-answer { max-height: 3000px; }
+
+.q-answer-inner {
+  border-top: 1px solid var(--border);
+  padding: 22px 20px 22px 60px;
+  background: #fafaf8;
+}
+
+.answer-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.answer-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.answer-body {
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.75;
+}
+
+.answer-body strong { color: var(--ink); font-weight: 600; }
+.answer-body em { color: var(--accent); font-style: normal; font-weight: 500; }
+
+.answer-body code {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--accent);
+}
+
+.answer-body pre {
+  background: var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  overflow-x: auto;
+  margin: 14px 0;
+}
+
+.answer-body pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #e2e8f0;
+  font-size: 13px;
+}
+
+.answer-body ul, .answer-body ol {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+
+.answer-body li { margin-bottom: 4px; }
+
+.tip-box {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: var(--accent-light);
+  border: 1px solid var(--accent-mid);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+}
+
+.tip-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.tip-body { font-size: 13px; color: var(--ink2); line-height: 1.6; }
+
+/* ── SEARCH RESULTS ── */
+.search-result-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px; flex-wrap: wrap; gap: 10px;
+}
+
+.search-result-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.result-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink3);
+}
+
+.result-concept-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--ink3);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+/* ── EMPTY ── */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--ink3);
+}
+
+.empty-icon { font-size: 52px; margin-bottom: 16px; }
+
+.empty-h {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--ink2);
+  margin-bottom: 8px;
+}
+
+.empty-sub { font-size: 14px; color: var(--ink3); }
+
+/* ── OVERLAY ── */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26,25,22,0.35);
+  z-index: 150;
+  backdrop-filter: blur(2px);
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; }
+  .hamburger { display: flex; align-items: center; }
+  .overlay.open { display: block; }
+  .hero { padding: 32px 20px 28px; }
+  .content { padding: 20px 16px 60px; }
+  .topbar { padding: 10px 16px; }
+  .topbar-filters { display: none; }
+  .hero-stats { flex-wrap: wrap; }
+  .hero-stat { padding: 12px 18px; }
+  .q-answer-inner { padding-left: 20px; }
+  .concept-grid { grid-template-columns: 1fr; }
+  .qa-intro { flex-direction: column; gap: 12px; }
+  .qa-intro-stats { margin-top: 8px; }
+}
+
+@media (max-width: 480px) {
+  .q-right .read-btn span { display: none; }
+}
+
+/* ── FOLLOW-UP QUESTIONS ── */
+.followups {
+  margin-top: 20px;
+  border-top: 1px dashed var(--border2);
+  padding-top: 18px;
+}
+
+.followups-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--amber);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+}
+
+.followups-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.followup-item {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 10px;
+  transition: border-color 0.18s;
+}
+
+.followup-item:last-child { margin-bottom: 0; }
+.followup-item:hover { border-color: var(--amber); }
+
+.followup-q-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  cursor: pointer;
+  background: var(--amber-light);
+  user-select: none;
+}
+
+.followup-q-icon { font-size: 13px; flex-shrink: 0; }
+
+.followup-q-text {
+  flex: 1;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.followup-chevron {
+  font-size: 11px;
+  color: var(--amber);
+  transition: transform 0.22s;
+  flex-shrink: 0;
+}
+
+.followup-item.open .followup-chevron { transform: rotate(180deg); }
+
+.followup-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.followup-item.open .followup-answer { max-height: 2000px; }
+
+.followup-answer-inner {
+  padding: 14px 16px;
+  background: #fffef7;
+  border-top: 1px solid #fde68a;
+  font-size: 13.5px;
+  color: var(--ink2);
+  line-height: 1.7;
+}
+
+.followup-answer-inner strong { color: var(--ink); }
+.followup-answer-inner em { color: var(--accent); font-style: normal; font-weight: 500; }
+.followup-answer-inner code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--accent);
+}
+
+/* freq badge */
+.freq-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #c2410c;
+  padding: 3px 9px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="layout">
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="brand">
+        <div class="brand-icon">🎯</div>
+        <div>
+          <div class="brand-name">Prep<em>Wise</em></div>
+          <div class="brand-sub">SWE Interview Prep</div>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="progress-ring-wrap">
+        <svg class="ring-svg" width="48" height="48" viewBox="0 0 48 48">
+          <circle class="ring-track" cx="24" cy="24" r="20"/>
+          <circle class="ring-fill" id="ringFill" cx="24" cy="24" r="20"
+            stroke-dasharray="125.6"
+            stroke-dashoffset="125.6"/>
+        </svg>
+        <div class="ring-info">
+          <div class="ring-pct" id="ringPct">0%</div>
+          <div class="ring-label">Completed</div>
+          <div class="ring-sub" id="ringSub">0 of 0 questions</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebarNav"></nav>
+  </aside>
+
+  <!-- ═══ MAIN ═══ -->
+  <main class="main">
+    <!-- Topbar -->
+    <header class="topbar">
+      <button class="hamburger" onclick="toggleSidebar()">☰</button>
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <input class="search-input" id="searchInput" type="text" placeholder="Search questions & concepts…"/>
+        <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+      </div>
+      <div class="topbar-filters">
+        <div class="pill active" id="pill-all" onclick="setDiff('all')">All</div>
+        <div class="pill" id="pill-easy" onclick="setDiff('easy')">Easy</div>
+        <div class="pill" id="pill-medium" onclick="setDiff('medium')">Medium</div>
+        <div class="pill" id="pill-hard" onclick="setDiff('hard')">Hard</div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-pattern"></div>
+      <div class="hero-tag">✦ Software Engineering</div>
+      <h1>Crack your next<br/><em>tech interview.</em></h1>
+      <p class="hero-desc">Browse real interview questions with detailed answers, follow-up counters, and tips — section by section. Track what you've studied and walk in confident.</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="stat-num" id="statTopics">0</div>
+          <div class="stat-label">Topics</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num" id="statQuestions">0</div>
+          <div class="stat-label">Questions</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num" id="statRead">0</div>
+          <div class="stat-label">Studied</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num" id="statPct">0%</div>
+          <div class="stat-label">Progress</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <div class="content" id="content"></div>
+  </main>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  DATA  — add more concepts & questions here
+// ═══════════════════════════════════════════════════
+const DATA = [
+  // ─── SECTION 1: INTRODUCTION & PROJECT ───
+  {
+    id: "s1-intro",
+    emoji: "🎤",
+    title: "Introduction & Project",
+    description: "Opening questions about your background, project and methodology. Always asked first — your first impression starts here.",
+    tag: "🔥 Always Asked",
+    freq: "Always asked first",
+    questions: [
+      {
+        q: "Can you please introduce yourself?",
+        tags: ["intro", "behavioral"],
+        answer: `This is your <strong>30–90 second elevator pitch</strong>. Structure it as: <em>Who you are → What you do → What you've done recently → Why you're here.</em><br><br>
+<strong>Sample Answer:</strong><br>
+"I'm a Java Backend Developer with 4 years of experience, currently working at [Company] on a banking microservices platform. I primarily work with Java 17, Spring Boot, and Kafka. In my current role, I've led the migration of our monolith order module to a microservice, reducing response time by 40%. I'm looking for an opportunity where I can take on more architectural responsibility and work on high-scale distributed systems."<br><br>
+<strong>Structure to follow:</strong><br>
+1. Current role + years of experience<br>
+2. Tech stack you work with daily<br>
+3. One standout achievement (quantified if possible)<br>
+4. Why you're exploring this opportunity`,
+        tip: "Prepare TWO versions — a 30-second one for quick openers and a 90-second deep version. Never recite your resume line by line.",
+        counter: [
+          "What specific achievement are you most proud of in your career?",
+          "How does your experience align with what we're looking for?"
+        ],
+        counterAnswers: [
+          `<strong>How to answer:</strong> Pick ONE concrete, quantified achievement. Use the <em>STAR format</em> (Situation → Task → Action → Result).<br><br>
+<strong>Real-world Example:</strong><br>
+"I'm most proud of optimizing our payment reconciliation service at my current company. The service was timing out for large merchants (50k+ transactions/day). I profiled the bottleneck — it was a N+1 query issue in JPA loading transactions one-by-one. I rewrote the query with batch fetching and added Redis caching for merchant configs. Response time dropped from 12 seconds to 800ms, and we went from 3 support tickets/week to zero for that issue."<br><br>
+Key formula: <strong>Context → Problem → Your action → Measurable result</strong>`,
+          `<strong>How to answer:</strong> Mirror your experience to the job description. Research the role beforehand. Connect YOUR skills to THEIR stack/domain.<br><br>
+<strong>Real-world Example:</strong><br>
+"Your job description mentions building scalable APIs for a high-traffic fintech platform. I've spent the last 3 years doing exactly that — building REST and event-driven services in Spring Boot that handle 50k requests/minute. I've also worked with the exact challenges you'd face in fintech: idempotent payment flows, distributed transactions with Saga pattern, and audit logging for compliance. I believe this overlap means I can contribute from day one."`
+        ]
+      },
+      {
+        q: "Can you explain your recent project in brief?",
+        tags: ["project"],
+        answer: `Use the <strong>Project Elevator Pitch</strong> structure:<br>
+1. <em>What the product does</em> (one sentence, business context)<br>
+2. <em>Your team's role / the module you own</em><br>
+3. <em>The tech stack</em><br>
+4. <em>Your personal contribution + impact</em><br><br>
+<strong>Real-world Example:</strong><br>
+"I work on a trade finance platform for a top-5 Indian bank. The platform digitises Letters of Credit (LC) and Bank Guarantees — documents that previously moved on paper. Our team owns the <strong>LC Lifecycle Service</strong>, which manages LC creation, amendment, and settlement workflows.<br><br>
+We use Java 17, Spring Boot, Oracle DB, and Apache Kafka for event streaming. My main contribution has been building the <strong>Amendment Workflow Engine</strong> — a state-machine-based service that handles 12 amendment types with full audit trails. It processes ~8,000 LCs per day."`,
+        tip: "Always have numbers ready: team size, daily transactions, lines of code you own, latency improvements. Numbers make your project sound real.",
+        counter: [
+          "What was the most complex technical challenge in this project?",
+          "What would you do differently if you started again?"
+        ],
+        counterAnswers: [
+          `<strong>How to answer:</strong> Don't say "the database was slow." Pick a genuine distributed systems / design challenge.<br><br>
+<strong>Real-world Example:</strong><br>
+"The hardest challenge was handling <em>partial failures in multi-step LC settlement</em>. Settlement involves debiting the applicant's account, updating LC status, generating SWIFT messages, and notifying downstream systems — all must succeed or all must roll back.<br><br>
+We couldn't use a 2PC (two-phase commit) across services, so I implemented the <strong>Saga pattern</strong> with compensating transactions. Each step publishes a Kafka event; on failure, a rollback event triggers compensating actions. I also added idempotency keys on every step so replays don't cause duplicate debits. This took 3 weeks to design and test, but we haven't had a data inconsistency incident since."`,
+          `<strong>How to answer:</strong> Show growth and self-awareness. Avoid "nothing" (sounds arrogant) or blaming teammates.<br><br>
+<strong>Real-world Example:</strong><br>
+"Honestly, I'd invest more time upfront in <em>API contract design</em>. When we started, different services defined their own DTOs independently, which led to a lot of mapping code and subtle field-name mismatches that caused prod bugs. If I started again, I'd insist on defining shared API contracts in an OpenAPI spec first, generating stubs from it, and enforcing contract tests in CI. We retrofitted this 6 months in, but the early inconsistencies cost us debugging time we didn't need to spend."`
+        ]
+      },
+      {
+        q: "What are your roles and responsibilities in your current project?",
+        tags: ["project"],
+        answer: `Be specific — don't just say "I develop features." Break it into layers:<br><br>
+<strong>Example Answer:</strong><br>
+"My responsibilities span the full backend stack of our LC Lifecycle service:<br><br>
+• <em>Feature development</em>: Designing and implementing REST APIs and Kafka consumers for LC workflows in Spring Boot<br>
+• <em>Code reviews</em>: I review PRs for the 3 junior developers in my team, focusing on design, security, and performance<br>
+• <em>Performance</em>: Profiling and fixing slow queries — I recently reduced a report generation API from 8s to 1.2s<br>
+• <em>On-call support</em>: I'm part of the L2 support rotation and have resolved 4 prod incidents in the last quarter<br>
+• <em>Technical docs</em>: I maintain the service's Confluence docs, architecture diagrams, and runbooks"<br><br>
+Then add your seniority signal: mentoring, architecture decisions, sprint planning involvement.`,
+        tip: "Interviewers listen for ownership signals: 'I led', 'I designed', 'I decided'. Passive language ('I was involved in') weakens your profile.",
+        counter: [
+          "Did you ever take ownership beyond your defined role?",
+          "How did you handle conflicting priorities?"
+        ],
+        counterAnswers: [
+          `<strong>Real-world Example:</strong><br>
+"Yes — during our mid-year release, our tech lead went on emergency leave two weeks before the go-live. I stepped in to coordinate the release: tracked all open items on a shared Jira board, ran daily 15-min standups with the team, and liaised with the QA and DevOps teams on deployment steps.<br><br>
+We delivered on time with zero sev-1 issues in the first week. My manager formally recognised this in my mid-year review, and it led to me being given the tech lead role for the next quarter's feature cycle. I learned that ownership isn't about title — it's about stepping up when the team needs it."`,
+          `<strong>Real-world Example:</strong><br>
+"In Q3 last year, I had to simultaneously: deliver a new feature for the business deadline, fix a critical performance bug found in UAT, and onboard a new junior developer.<br><br>
+I used a simple triage framework: <em>impact vs effort</em>. The performance bug was blocking UAT sign-off, so it was highest priority — I fixed that first (2 days). Then I timeboxed the onboarding to 1 hour/day (pairing sessions in the morning). The feature was broken into smaller tasks so I could make measurable progress daily. I communicated the adjusted timeline to my manager proactively and we agreed to defer one sub-feature to the next sprint. Everything shipped within the adjusted timeline."`
+        ]
+      },
+      {
+        q: "What is your day-to-day task?",
+        tags: ["project"],
+        answer: `Walk through a realistic working day. Interviewers want to gauge your <em>actual hands-on time</em> vs ceremony time.<br><br>
+<strong>Example Answer:</strong><br>
+"A typical day looks like this:<br><br>
+🌅 <em>Morning (9–10am)</em>: Daily standup (15 min) + checking Grafana dashboards for overnight alerts, reviewing any overnight Kafka consumer lag.<br><br>
+💻 <em>Core hours (10am–1pm)</em>: Main coding block — feature development, writing unit/integration tests, working on Jira tickets. Currently implementing a bulk amendment API.<br><br>
+🔍 <em>Post-lunch (2–4pm)</em>: Code reviews for teammates, occasional 1:1 with my tech lead, writing Confluence documentation for new APIs.<br><br>
+🔧 <em>Late afternoon (4–5:30pm)</em>: Debugging, responding to QA queries, sometimes pair programming if a junior is stuck.<br><br>
+I'd say roughly 60% coding, 20% reviews/meetings, 20% debugging/support."`,
+        tip: "Showing you monitor production (dashboards, alerts, logs) is a green flag — it signals production mindset, not just feature-factory thinking.",
+        counter: [
+          "How much time do you spend in meetings vs coding?",
+          "How do you prioritise tasks?"
+        ],
+        counterAnswers: [
+          `<strong>Real-world Example:</strong><br>
+"On average I spend about 6–7 hours a day on technical work (coding, debugging, code reviews, documentation) and 1–1.5 hours in meetings — daily standup, sprint ceremonies, and ad-hoc syncs.<br><br>
+I've intentionally protected my deep-work blocks. I block 10am–1pm on my calendar as 'focus time' and decline non-critical meetings during that window. This came from a period where my calendar was fragmented into 30-minute slots and my velocity dropped noticeably. I discussed it with my manager and we agreed that protecting focus time is worth the trade-off."`,
+          `<strong>Framework I use — MoSCoW + impact:</strong><br>
+"I classify tasks by: (1) <em>Must-do today</em>: production incidents, sprint commitment blockers; (2) <em>Should-do today</em>: code reviews blocking teammates, time-sensitive feature tasks; (3) <em>Can defer</em>: documentation, refactoring, exploratory research.<br><br>
+Practically: each morning I pick 3 things I must finish that day and write them on a sticky note on my monitor. If a new task comes in during the day, I ask: 'Does this replace one of my 3 things or can it wait?' This prevents the 'everything is urgent' trap and keeps me focused."`
+        ]
+      },
+      {
+        q: "What technologies are you working on?",
+        tags: ["tech-stack"],
+        answer: `Be structured — list by layer and show depth, not just breadth.<br><br>
+<strong>Example Answer:</strong><br>
+"Here's my current stack, layer by layer:<br><br>
+• <em>Language</em>: Java 17 (records, sealed classes, text blocks, stream API heavily used)<br>
+• <em>Framework</em>: Spring Boot 3.x — REST APIs, Spring Security (JWT auth), Spring Data JPA<br>
+• <em>Messaging</em>: Apache Kafka — producing and consuming domain events, DLQ handling<br>
+• <em>Database</em>: Oracle (primary OLTP), Redis (caching, session store)<br>
+• <em>Build/CI</em>: Maven, Jenkins pipelines, SonarQube for code quality<br>
+• <em>Observability</em>: ELK stack (logs), Prometheus + Grafana (metrics), Jaeger (distributed tracing)<br>
+• <em>Containerisation</em>: Docker for local dev, Kubernetes on production (managed by our DevOps team)<br>
+• <em>Testing</em>: JUnit 5, Mockito, Testcontainers for integration tests"`,
+        tip: "Don't just list technologies — for 2–3 core ones, mention HOW you use them. 'Kafka for async event streaming between services' is far stronger than just 'Kafka'.",
+        counter: [
+          "Which technology did you find hardest to learn and why?"
+        ],
+        counterAnswers: [
+          `<strong>Real-world Example:</strong><br>
+"Honestly, <em>Kafka</em> had the steepest learning curve for me. It wasn't the API — the Spring Kafka API is straightforward. The hard part was understanding <strong>distributed guarantees</strong>: exactly-once vs at-least-once semantics, consumer group rebalancing, offset management, and what happens when a consumer crashes mid-processing.<br><br>
+I had a real incident where we had duplicate payment notifications because our consumer committed offsets before processing succeeded. I spent two days debugging it, then another three days reading the Kafka documentation properly and redesigning our consumer to use manual offset commit after successful processing + idempotent message handling downstream.<br><br>
+That incident made me a much better Kafka engineer — I now always ask: 'what happens if this consumer crashes right here?' for every line of consumer code."`
+        ]
+      },
+      {
+        q: "Which Java version are you using in your project?",
+        tags: ["java"],
+        answer: `State your version and show you understand <em>WHY</em> it matters — not just a number.<br><br>
+<strong>Example Answer:</strong><br>
+"We're on <strong>Java 17 LTS</strong>. We chose 17 because it's a long-term support version with strong ecosystem support across Spring Boot 3.x, Hibernate 6, and our CI toolchain.<br><br>
+From Java 17, we actively use:<br>
+• <strong>Records</strong> — for immutable DTOs (replaced 50+ lines of Lombok boilerplate per class)<br>
+• <strong>Sealed classes</strong> — for modelling workflow states exhaustively<br>
+• <strong>Text blocks</strong> — for SQL queries and JSON templates in tests<br>
+• <strong>Pattern matching instanceof</strong> — cleaner type-checking in domain logic<br>
+• <strong>Stream enhancements</strong> — <code>toList()</code>, <code>Collectors.teeing()</code><br>
+• <strong>Switch expressions</strong> — arrow syntax for cleaner conditional mapping"`,
+        tip: "If asked about Java 21, mention Virtual Threads (Project Loom) — they're the biggest practical change for backend developers in years.",
+        counter: [
+          "Why haven't you upgraded to a newer version?",
+          "What features would you gain by upgrading?"
+        ],
+        counterAnswers: [
+          `<strong>Real-world Example (staying on Java 17):</strong><br>
+"We evaluated Java 21 six months ago. The blockers were: (1) our ORM — Hibernate 5.x had compatibility issues with Java 21 at the time; (2) one of our internal security libraries wasn't certified for Java 21 yet (banking has strict library approval processes); (3) the migration cost — we have 8 services and the testing effort would span 2 sprints.<br><br>
+We created a tech debt ticket, and we're planning the Java 21 migration in Q2 next year once all dependencies are certified. Java 17 is LTS and still fully supported, so there's no urgency from a security standpoint."`,
+          `<strong>Java 21 key gains over Java 17:</strong><br>
+"The biggest win would be <strong>Virtual Threads (JEP 444)</strong> — they allow creating millions of lightweight threads, eliminating the thread-per-request bottleneck in Spring Boot without async/reactive programming complexity. Our payment service currently uses a thread pool of 200 threads and sometimes queues requests under spike load. Virtual threads would likely let us handle 10x the concurrency with the same hardware.<br><br>
+Other gains: <strong>Sequenced Collections</strong> (cleaner ordered collection APIs), <strong>Pattern Matching for switch</strong> (GA), and <strong>Record Patterns</strong> for clean deconstruction in complex domain objects."`
+        ]
+      },
+      {
+        q: "Is your project monolithic or microservices-based?",
+        tags: ["architecture"],
+        answer: `State the architecture and <em>contextualise why</em> — show architectural awareness.<br><br>
+<strong>Example Answer (Microservices):</strong><br>
+"We're fully microservices-based — 14 services in total. The core services I work on are: LC Lifecycle Service, Document Management Service, and Notification Service. They communicate via REST for synchronous calls and Kafka for async events.<br><br>
+Each service has its own database (Database-per-service pattern), which ensures loose coupling. We deploy independently via Jenkins → Docker → Kubernetes.<br><br>
+The trade-off we manage constantly is <em>distributed system complexity</em>: network failures, eventual consistency, distributed tracing across services. But it gives us the ability to scale individual services independently — during month-end, we scale the Settlement Service to 5 replicas while others stay at 2."`,
+        tip: "Whether mono or micro, know the trade-offs cold. Interviewers probe this to see if you've thought beyond 'microservices = good'.",
+        counter: [
+          "What drove that architectural decision?",
+          "What are the pain points of your current architecture?"
+        ],
+        counterAnswers: [
+          `<strong>Real-world Example:</strong><br>
+"The migration from monolith to microservices was a business-driven decision as much as a technical one. The monolith had a 45-minute full-regression test suite — any change required the whole suite. When the business wanted to release LC features weekly, that test cycle became a blocker.<br><br>
+Additionally, the LC and Trade Loan modules had completely different scaling needs — LC processing is batch-heavy at month-end; Trade Loans are real-time. In a monolith, we had to scale everything together to handle LC peaks, wasting resources.<br><br>
+The microservices split let us: deploy independently (releases went from monthly to weekly per service), scale selectively, and let different teams own different services without stepping on each other in the codebase."`,
+          `<strong>Real-world Example (Microservices pain points):</strong><br>
+"Our biggest pain points are:<br><br>
+1. <em>Distributed tracing</em>: When a transaction fails, tracing it across 4 services through Kafka and REST logs is painful. We've partially solved this with correlation IDs and Jaeger, but it still takes more time than debugging a monolith would.<br><br>
+2. <em>Data consistency</em>: We use Saga pattern but compensating transactions are complex to write and test. One bug in a compensating transaction caused a double-reversal incident last year.<br><br>
+3. <em>Local development overhead</em>: Running all 14 services locally is impractical. We use a partial stack (3–4 relevant services + mocks for the rest) which sometimes masks integration bugs until QA.<br><br>
+That said, none of these would make me switch back to the monolith — the independent deployability and scaling benefits are worth it."`
+        ]
+      },
+      {
+        q: "Which domain are you working in? (Banking / Insurance / E-commerce)",
+        tags: ["domain"],
+        answer: `State the domain and immediately add domain-specific context — this shows you've built real expertise, not just generic CRUD.<br><br>
+<strong>Example Answer (Banking/Trade Finance):</strong><br>
+"I work in <strong>trade finance</strong> within the banking domain — specifically digitising Letters of Credit (LC) and Bank Guarantees for a top-5 Indian bank.<br><br>
+Trade finance is a compliance-heavy, document-centric domain. Key domain-specific challenges I deal with:<br>
+• <em>SWIFT messaging</em>: LCs communicate with foreign banks via SWIFT MT700/MT707 messages — structured financial telegrams with strict formatting<br>
+• <em>UCP 600 compliance</em>: International rules governing LCs — our workflows must mirror these rules exactly<br>
+• <em>Audit trails</em>: Every state change on a financial instrument must be immutably logged for regulatory inspection<br>
+• <em>Multi-party workflows</em>: Applicant → Issuing Bank → Advising Bank → Beneficiary — each party has a role in the LC lifecycle"`,
+        tip: "Domain knowledge is a differentiator in senior interviews. Know 3–4 domain-specific terms and challenges you can speak to confidently.",
+        counter: [
+          "What domain-specific challenges have you faced?"
+        ],
+        counterAnswers: [
+          `<strong>Real-world Example:</strong><br>
+"The most challenging domain problem was <em>amendment sequencing</em> — when multiple parties try to amend the same LC simultaneously, we can't allow conflicting versions to co-exist.<br><br>
+We implemented <strong>optimistic locking</strong> on LC records (using JPA <code>@Version</code>) and a <strong>state machine</strong> that enforces valid amendment transitions. For example, a LC in 'SETTLED' state cannot be amended — attempting it throws a <code>InvalidLCStateException</code> caught by a global exception handler that returns an appropriate 409 Conflict response.<br><br>
+Another challenge was handling <em>partial document discrepancies</em> — a term from UCP 600 where the beneficiary presents documents that don't perfectly match the LC terms. The rules for what constitutes a valid discrepancy are nuanced, and we had to encode them into a rules engine rather than hard-coded if-else chains."`
+        ]
+      },
+      {
+        q: "What database are you using in your project?",
+        tags: ["database"],
+        answer: `Name the DB, version, and show you understand the <em>why</em> behind the choice.<br><br>
+<strong>Example Answer (Oracle):</strong><br>
+"We use <strong>Oracle 19c</strong> as our primary OLTP database, and <strong>Redis 7</strong> as our caching layer.<br><br>
+Oracle for the primary store because: it's enterprise-certified by the bank's security and compliance team, it has mature support for our existing DBA team, and features like row-level security and fine-grained auditing align with our regulatory requirements.<br><br>
+Redis for caching because: merchant configuration data is read thousands of times per day but changes rarely — we cache it with a 30-minute TTL and write-through invalidation. This reduced DB load by ~40% and LC lookup latency from 180ms to 12ms for cached entries.<br><br>
+We also use an <strong>Oracle Exadata</strong> cluster for our reporting queries — the main OLTP DB is isolated from heavy reads this way."`,
+        tip: "Always mention what you're caching and why — it shows production-grade thinking. Raw DB-only answers suggest limited performance experience.",
+        counter: [
+          "Why that database over alternatives?",
+          "Have you faced scaling challenges with it?"
+        ],
+        counterAnswers: [
+          `<strong>Real-world Example:</strong><br>
+"It was partly a technical decision, partly an organisational one. Technically, Oracle's ACID compliance, mature partitioning features, and row-level security fit our banking use case. Our financial data has complex audit requirements — Oracle's built-in Workspace Manager and Fine-Grained Auditing save us from building those ourselves.<br><br>
+Organisationally, the bank's DBA team has 15 years of Oracle expertise, monitoring tooling, and DR procedures built around it. Switching to PostgreSQL (which I'd personally prefer for greenfield projects) would require retraining, new tooling, and re-certifying backups — a multi-year effort.<br><br>
+For new services where we have freedom, we've started using PostgreSQL on AWS RDS — it's been great for services that don't need Oracle-specific features."`,
+          `<strong>Real-world Example:</strong><br>
+"Yes — our biggest scaling challenge was the <em>LC document search</em> feature. Users search LCs by applicant name, date range, currency, and status. The original query did full-table scans on a 50M row table and timed out at peak.<br><br>
+We solved it in three steps: (1) Added a <strong>composite index</strong> on (applicant_id, created_date, status) — reduced query from 8s to 1.2s; (2) Moved search to a <strong>read replica</strong> to isolate it from write traffic; (3) Implemented <strong>cursor-based pagination</strong> instead of OFFSET/LIMIT since OFFSET on large tables still requires scanning skipped rows.<br><br>
+The combination brought search latency to under 200ms at the 95th percentile."`
+        ]
+      },
+      {
+        q: "Can you describe the architecture of your current application?",
+        tags: ["architecture"],
+        answer: `Draw it in words — cover the request journey from client to database.<br><br>
+<strong>Example Answer:</strong><br>
+"Our application is a <strong>microservices system</strong> on AWS, structured in layers:<br><br>
+<em>Client Layer:</em> Browser/mobile → hits our <strong>API Gateway</strong> (Kong) which handles auth (JWT validation), rate limiting, and routing.<br><br>
+<em>Service Layer:</em> 14 Spring Boot microservices. Synchronous communication via REST (OpenFeign client). Asynchronous communication via <strong>Kafka</strong> (domain events like LCCreated, LCSettled).<br><br>
+<em>Data Layer:</em> Each service owns its database (Database-per-service). Core services use Oracle 19c. Redis for caching. Object storage (S3) for LC documents (PDFs, scanned images).<br><br>
+<em>Observability:</em> All services push logs to ELK. Metrics to Prometheus → Grafana dashboards. Distributed traces via Jaeger with correlation IDs propagated through Kafka headers and HTTP headers.<br><br>
+<em>Deployment:</em> Jenkins CI/CD → Docker images → Kubernetes (EKS), 2 replicas per service in prod."`,
+        tip: "If asked to draw this on a whiteboard, always draw it left-to-right: Client → Gateway → Services → DB. Add Kafka as a bus between services.",
+        counter: [
+          "How does data flow from request to database?",
+          "What would break first under 10x load?"
+        ],
+        counterAnswers: [
+          `<strong>Request → DB flow example (Create LC):</strong><br>
+"1. Client sends <code>POST /api/lc</code> with LC details and auth token<br>
+2. API Gateway validates JWT, checks rate limit, routes to LC Service<br>
+3. LC Service controller receives request, validates DTO with Bean Validation<br>
+4. Service layer applies business rules (credit limit check via synchronous call to Credit Service)<br>
+5. If approved: LC entity persisted to Oracle via JPA (wrapped in <code>@Transactional</code>)<br>
+6. After DB commit: <code>LCCreatedEvent</code> published to Kafka topic <code>lc.created</code><br>
+7. Document Service consumes event → generates LC PDF, stores in S3, saves S3 reference in its own DB<br>
+8. Notification Service consumes event → sends email to applicant<br>
+9. LC Service returns 201 Created with LC reference number<br><br>
+Total: ~300ms p95 for the synchronous part. Async steps (PDF, email) happen within 5 seconds."`,
+          `<strong>Honest capacity analysis:</strong><br>
+"At 10x load, the first bottleneck would likely be the <strong>Oracle database connection pool</strong>. We currently run HikariCP with max 50 connections per service instance. At 10x load, connection wait times would spike before the DB itself saturated.<br><br>
+Second bottleneck: the <strong>synchronous Credit Service call</strong> during LC creation. It's a blocking REST call with a 3-second timeout. Under spike load, if Credit Service slows down, LC Service threads pile up waiting — classic thread starvation.<br><br>
+Fixes I'd apply: (1) Increase connection pool + add DB read replicas; (2) Make the credit check async using a request-reply pattern on Kafka with a short timeout; (3) Add circuit breakers (Resilience4j) on all synchronous inter-service calls so slow dependencies don't cascade."`
+        ]
+      },
+      {
+        q: "What is the team size you're working with?",
+        tags: ["team"],
+        answer: `Answer with team structure, not just a number — shows organisational awareness.<br><br>
+<strong>Example Answer:</strong><br>
+"Our squad has 8 people:<br>
+• 1 Tech Lead (who I report to)<br>
+• 4 Backend Developers (including me — I'm the most senior after the TL)<br>
+• 1 Frontend Developer<br>
+• 1 QA Engineer<br>
+• 1 Product Owner<br><br>
+We're one of 3 squads working on the overall trade finance platform. The squads work on separate bounded contexts — my squad owns LC Lifecycle, another owns Trade Loans, and the third owns the Admin and Reporting platform.<br><br>
+We share a DevOps engineer across all three squads — that's one of our friction points since we sometimes queue for pipeline changes."`,
+        tip: "Mentioning your position in the team hierarchy signals seniority. 'Most senior developer after the TL' is a strong implicit signal.",
+        counter: [
+          "How do you handle code ownership in a large team?"
+        ],
+        counterAnswers: [
+          `<strong>Real-world Example:</strong><br>
+"We use a combination of approaches:<br><br>
+1. <em>Module ownership</em>: Each developer is the primary owner of specific services/modules. I own the LC Amendment Workflow Engine. Ownership means you're the go-to for questions, reviews on that code, and responsible for its health metrics.<br><br>
+2. <em>CODEOWNERS file</em>: In our Git repo, CODEOWNERS ensures that PRs touching my module automatically request my review — no one merges to it without my approval.<br><br>
+3. <em>Collective responsibility for quality</em>: While I own modules, anyone on the team can raise issues. We have a 'no broken windows' policy — if you see a bug while working nearby, you either fix it or raise a ticket immediately, even if it's not your code.<br><br>
+This balance of individual ownership and collective responsibility works well. People feel pride in their modules but don't become territorial gatekeepers."`
+        ]
+      },
+      {
+        q: "Do you follow Agile methodology? Can you explain your sprint cycle?",
+        tags: ["agile"],
+        answer: `Walk through your actual sprint, not the textbook definition.<br><br>
+<strong>Example Answer:</strong><br>
+"Yes, we follow Scrum with 2-week sprints. Here's how ours runs:<br><br>
+📋 <em>Sprint Planning (Day 1, 2 hours)</em>: PO presents priority backlog items. Team estimates in story points (using Planning Poker). We commit to items that fit our team velocity (~35 points).<br><br>
+🏃 <em>During Sprint</em>: Daily standup (15 min, async updates on Slack + 10 min video call for blockers). Devs pick tickets from 'To Do' → 'In Progress' → 'In Review' → 'Done' on Jira.<br><br>
+🧪 <em>Day 8–9</em>: Feature freeze. QA runs regression on completed items. Devs fix bugs found.<br><br>
+🔍 <em>Sprint Review (Day 10, 1 hour)</em>: Demo completed features to stakeholders.<br><br>
+🪞 <em>Retrospective (Day 10, 45 min)</em>: What went well / what didn't / action items.<br><br>
+Definition of Done: code merged, unit tests passing, deployed to staging, QA sign-off."`,
+        tip: "Knowing your team's velocity (story points per sprint) and your Definition of Done makes you sound like a practitioner, not just someone who read the Scrum guide.",
+        counter: [
+          "What do you do when a sprint goal can't be met?"
+        ],
+        counterAnswers: [
+          `<strong>Real-world Example:</strong><br>
+"This happened in Q4 last year. Mid-sprint, a production incident required 3 days of my time, which put two of my sprint tickets at risk.<br><br>
+I flagged it early in standup on Day 5 rather than waiting until the last day. My tech lead and I immediately triaged: we identified which tickets could be descoped (a 'nice to have' reporting enhancement), which could be simplified (deliver MVP without edge-case handling, create follow-up ticket), and which were committed to the business and non-negotiable.<br><br>
+We delivered the non-negotiable items, descoped the enhancement with PO agreement, and simplified one feature. Sprint velocity was 28 instead of 35 — a visible dip, but we were transparent about it. In the retrospective, we identified that our incident-response process should create an automatic spike ticket to protect sprint commitment, which we've since implemented."`
+        ]
+      },
+      {
+        q: "What development methodology does your team follow — Agile or Waterfall?",
+        tags: ["agile"],
+        answer: `State your methodology and show you understand the <em>trade-offs</em> in your context.<br><br>
+<strong>Example Answer:</strong><br>
+"We follow <strong>Agile (Scrum)</strong> with 2-week sprints. It suits our context because requirements in trade finance evolve — regulatory changes, business process tweaks, and integration with external banking systems all create feedback loops that Waterfall's fixed requirements phase can't accommodate.<br><br>
+For example, when RBI issued a circular requiring new data fields in LC settlement reports last year, we were able to plan, develop, test, and deploy the change in one sprint. In a Waterfall project, that change would require a change-request process, re-baselining the requirements document, and potentially delaying the whole release."`,
+        tip: "Don't just say 'Agile' — show that you understand WHY it fits (or doesn't fit perfectly) your specific context.",
+        counter: [
+          "What are the trade-offs you see in your chosen methodology?"
+        ],
+        counterAnswers: [
+          `<strong>Honest Agile trade-offs:</strong><br>
+"Agile isn't perfect for us. The main trade-offs we see:<br><br>
+<em>Pros:</em><br>
+• Frequent releases keep stakeholders engaged and catch misunderstandings early<br>
+• We can respond to regulatory changes quickly (happened 3 times this year)<br>
+• Small increments mean smaller blast radius when something goes wrong<br><br>
+<em>Cons:</em><br>
+• Large architectural decisions (e.g., migrating from Oracle to a new DB) are hard to fit into sprints — they need uninterrupted focus that 2-week cycles don't naturally provide. We address this with quarterly 'tech sprints' separate from feature sprints.<br>
+• Accumulated technical debt: the pressure to deliver sprint stories sometimes leads to shortcuts. We've had to schedule dedicated refactoring sprints to address this.<br>
+• Velocity pressure: story point estimates can become a management KPI, creating perverse incentives to inflate estimates or rush testing. We actively push back on treating velocity as a productivity metric."`
+        ]
+      },
+      {
+        q: "What is the difference between Agile and Waterfall methodology?",
+        tags: ["agile"],
+        answer: `Compare across key dimensions — don't just say 'Agile is iterative, Waterfall is linear.'<br><br>
+<table style="width:100%;border-collapse:collapse;font-size:13px;margin-top:8px">
+<tr style="background:var(--bg2)"><th style="padding:8px;text-align:left;border:1px solid var(--border)">Dimension</th><th style="padding:8px;text-align:left;border:1px solid var(--border)">Agile</th><th style="padding:8px;text-align:left;border:1px solid var(--border)">Waterfall</th></tr>
+<tr><td style="padding:8px;border:1px solid var(--border)">Delivery</td><td style="padding:8px;border:1px solid var(--border)">Iterative, incremental releases</td><td style="padding:8px;border:1px solid var(--border)">Single delivery at end</td></tr>
+<tr style="background:var(--bg2)"><td style="padding:8px;border:1px solid var(--border)">Requirements</td><td style="padding:8px;border:1px solid var(--border)">Evolve throughout</td><td style="padding:8px;border:1px solid var(--border)">Fixed upfront</td></tr>
+<tr><td style="padding:8px;border:1px solid var(--border)">Testing</td><td style="padding:8px;border:1px solid var(--border)">Continuous, per sprint</td><td style="padding:8px;border:1px solid var(--border)">Phase after dev complete</td></tr>
+<tr style="background:var(--bg2)"><td style="padding:8px;border:1px solid var(--border)">Risk</td><td style="padding:8px;border:1px solid var(--border)">Early feedback reduces risk</td><td style="padding:8px;border:1px solid var(--border)">Risk discovered late</td></tr>
+<tr><td style="padding:8px;border:1px solid var(--border)">Documentation</td><td style="padding:8px;border:1px solid var(--border)">Working software over docs</td><td style="padding:8px;border:1px solid var(--border)">Heavy documentation</td></tr>
+<tr style="background:var(--bg2)"><td style="padding:8px;border:1px solid var(--border)">Customer</td><td style="padding:8px;border:1px solid var(--border)">Involved throughout</td><td style="padding:8px;border:1px solid var(--border)">Involved at start and end</td></tr>
+</table><br>
+<strong>Real-world context:</strong> In our banking project, a regulatory change mid-development can be absorbed by Agile with a sprint replanning. In Waterfall, it would require a formal change request and potentially rescoping the whole project.`,
+        tip: "Bonus points for mentioning Waterfall's legitimate use cases: fixed-price government contracts, hardware development, or safety-critical systems where specs must be frozen.",
+        counter: [
+          "When would Waterfall actually be better than Agile?"
+        ],
+        counterAnswers: [
+          `<strong>Waterfall genuinely wins here:</strong><br>
+"Waterfall is a better fit when:<br><br>
+1. <em>Fixed requirements + fixed cost contracts</em>: Government procurement, defence contracts — the scope, budget, and deadline are legally fixed. Changes go through a formal change-control board. Agile's flexibility becomes a liability here because it can justify scope creep.<br><br>
+2. <em>Hardware-dependent software</em>: If you're writing firmware for a medical device or an embedded system in a car, you can't iterate rapidly — the hardware must be finalised before software testing. The physical constraint forces waterfall-like sequencing.<br><br>
+3. <em>Safety-critical, heavily regulated systems</em>: Avionics software (DO-178C), nuclear plant control systems — every requirement must be documented, reviewed, traced, and formally verified. The documentation overhead that slows Agile is the entire point here. You need to prove to regulators that every line of code is traceable to a requirement.<br><br>
+4. <em>Large construction-like projects</em>: If you're building a data centre, laying fibre cables, or migrating a mainframe — the 'build it, get feedback, rebuild' loop doesn't apply. You dig once."`
+        ]
+      }
+    ]
+  },
+  // ─── SECTION 2: OOP CONCEPTS ───
+  {
+    id: "s2-oop",
+    emoji: "📦",
+    title: "OOP Concepts",
+    description: "Inheritance, polymorphism, encapsulation, access modifiers and core OOP tricky questions.",
+    tag: "⭐ 90% of Interviews",
+    freq: "Asked in 90% of interviews",
+    questions: [
+      {
+        q: "What is polymorphism and can you give a real-world example?",
+        tags: ["oop", "core"],
+        answer: `<strong>Polymorphism</strong> means "many forms" — the same method name behaves differently depending on the object it is called on.<br><br>
+<strong>Real-world analogy:</strong> A <em>pay()</em> method on a checkout page behaves differently for CreditCard, UPI, and NetBanking — but the calling code just calls <code>pay(amount)</code> without caring which.<br><br>
+<strong>Java example:</strong><br>
+<pre><code>abstract class Payment {
+    abstract void pay(double amount);
+}
+class CreditCard extends Payment {
+    void pay(double amount) { System.out.println("Charging card: " + amount); }
+}
+class UPI extends Payment {
+    void pay(double amount) { System.out.println("UPI transfer: " + amount); }
+}
+Payment p = new CreditCard();
+p.pay(500);  // Charging card: 500.0
+p = new UPI();
+p.pay(500);  // UPI transfer: 500.0</code></pre>
+<strong>Two types:</strong><br>
+• <em>Compile-time (Static)</em>: Method Overloading — resolved by compiler based on method signature<br>
+• <em>Runtime (Dynamic)</em>: Method Overriding — resolved by JVM at runtime using actual object type`,
+        tip: "Always give a real-world example first, then back it with code. Payment systems, notification senders, and shape renderers are classic examples.",
+        counter: [
+          "What is the difference between compile-time and runtime polymorphism?",
+          "Can you show polymorphism without inheritance?"
+        ],
+        counterAnswers: [
+          `<strong>Compile-time Polymorphism (Overloading)</strong> — resolved by compiler based on method signature:<br><br>
+<pre><code>class Logger {
+    void log(String msg) { }
+    void log(String msg, int level) { }  // overloaded
+    void log(Exception ex) { }           // overloaded
+}</code></pre>
+Compiler picks the right method at the call site. No virtual dispatch needed.<br><br>
+<strong>Runtime Polymorphism (Overriding)</strong> — resolved by JVM based on actual object type:<br>
+<pre><code>Animal a = new Dog();  // reference = Animal, object = Dog
+a.speak();             // calls Dog's speak() — runtime decision</code></pre>
+The JVM uses the actual object's vtable at runtime. The declared reference type (<code>Animal</code>) is irrelevant to which method runs.`,
+          `<strong>Yes — using interfaces without class inheritance:</strong><br><br>
+<pre><code>interface Drawable {
+    void draw();
+}
+class Circle implements Drawable {
+    public void draw() { System.out.println("Drawing circle"); }
+}
+class Square implements Drawable {
+    public void draw() { System.out.println("Drawing square"); }
+}
+List&lt;Drawable&gt; shapes = List.of(new Circle(), new Square());
+shapes.forEach(Drawable::draw);  // polymorphic — no common parent class!</code></pre>
+Circle and Square share no parent class — only the <code>Drawable</code> interface. The loop is polymorphic because <code>draw()</code> resolves to the correct class at runtime.<br><br>
+This is why <strong>"program to interfaces, not implementations"</strong> is a core OOP principle.`
+        ]
+      },
+      {
+        q: "When would you choose a default method in an interface over an abstract class method?",
+        tags: ["oop", "java8"],
+        answer: `<strong>Default methods</strong> (Java 8+) let interfaces have implementations. The decision depends on what you need:<br><br>
+<strong>Choose interface default method when:</strong><br>
+• Adding new behaviour to an existing interface <em>without breaking</em> all implementors<br>
+• Multiple unrelated classes need shared utility behaviour with no shared state<br>
+• You want multiple inheritance of behaviour (Java allows implementing many interfaces)<br><br>
+<strong>Choose abstract class method when:</strong><br>
+• Shared behaviour needs access to <em>instance state</em> (fields)<br>
+• You need a shared constructor or initialisation logic<br>
+• You need protected / package-private visibility<br><br>
+<strong>Real-world example:</strong><br>
+Java added <code>forEach()</code>, <code>stream()</code>, <code>removeIf()</code> as default methods to <code>Collection</code> in Java 8. If they were abstract, every ArrayList, LinkedList, HashSet etc. would have broken.<br><br>
+<pre><code>interface Auditable {
+    default void logAction(String action) {
+        System.out.println("[AUDIT] " + action + " at " + LocalDateTime.now());
+    }
+}
+// Any class can get free audit logging without touching an abstract class</code></pre>`,
+        tip: "Default methods solve the 'interface evolution problem' — adding methods to published interfaces without breaking existing implementors. That was the primary motivation in Java 8.",
+        counter: [
+          "What happens if two interfaces provide the same default method?",
+          "Can default methods access instance variables?"
+        ],
+        counterAnswers: [
+          `<strong>Diamond Problem — compiler forces you to resolve it explicitly:</strong><br><br>
+<pre><code>interface A { default void greet() { System.out.println("Hello from A"); } }
+interface B { default void greet() { System.out.println("Hello from B"); } }
+
+class C implements A, B {
+    // COMPILE ERROR if you don't override greet()
+    @Override
+    public void greet() {
+        A.super.greet();  // explicitly pick A's version
+        // or B.super.greet(); or write your own
+    }
+}</code></pre>
+The syntax <code>A.super.greet()</code> is the only way to call a specific interface's default method from an implementing class. Java forces explicit resolution — no silent ambiguity.`,
+          `<strong>No — default methods cannot access instance variables.</strong><br><br>
+Interfaces have no instance state. Fields in interfaces are implicitly <code>public static final</code> constants.<br><br>
+If your default method needs instance state, declare abstract getters and have implementing classes provide the values:<br>
+<pre><code>interface Named {
+    String getName();  // abstract — implementor provides instance value
+    default void greet() { System.out.println("Hello " + getName()); }
+}
+class Employee implements Named {
+    private String name;
+    public String getName() { return name; }  // provides instance state
+}</code></pre>`
+        ]
+      },
+      {
+        q: "What happens if parent and child both have static methods with the same name?",
+        tags: ["oop", "tricky"],
+        answer: `This is called <strong>method hiding</strong> — NOT overriding.<br><br>
+<pre><code>class Parent {
+    static void display() { System.out.println("Parent static"); }
+}
+class Child extends Parent {
+    static void display() { System.out.println("Child static"); }
+}
+Parent p = new Child();
+p.display();      // "Parent static" — resolved by REFERENCE type (compile time)
+Child.display();  // "Child static"</code></pre>
+<strong>Key difference from overriding:</strong><br>
+• Overriding → JVM uses actual object type at <em>runtime</em> (dynamic dispatch)<br>
+• Method hiding → compiler uses declared reference type at <em>compile time</em><br><br>
+<code>Parent p = new Child(); p.display();</code> calls Parent's display() — because <code>p</code> is declared as <code>Parent</code>. The actual object type (Child) is ignored for static methods.<br><br>
+<strong>Rule:</strong> Static methods belong to the class, not the object. Resolved at compile time — polymorphism does NOT apply.`,
+        tip: "Key phrase for interviews: 'method hiding, not overriding'. Static methods use invokestatic bytecode, which is resolved at compile time. Override uses invokevirtual, which is resolved at runtime.",
+        counter: [
+          "Why is this method hiding and not overriding?",
+          "How does the JVM resolve this at compile time?"
+        ],
+        counterAnswers: [
+          `<strong>Overriding requires runtime dispatch — static methods can't participate.</strong><br><br>
+Overriding works via the JVM's <em>vtable</em> — a per-object method lookup table. When you call a virtual method, the JVM consults the actual object's vtable at runtime.<br><br>
+Static methods are not in the vtable. They are bound directly to the class in bytecode. There is no "actual object type" to look up — the compiler embeds the exact class to call at compile time.<br><br>
+Therefore: static methods physically cannot participate in the runtime polymorphism mechanism. What looks like "overriding" is two independent static methods with the same name.`,
+          `<strong>The compiler emits invokestatic with a hardcoded class:</strong><br><br>
+For <code>p.display()</code> where <code>p</code> is declared as <code>Parent</code>, the compiler generates:<br>
+<code>invokestatic Parent.display()</code><br><br>
+This bytecode instruction has <code>Parent</code> baked into it — regardless of what <code>p</code> points to at runtime.<br><br>
+Compare with instance method override — generates <code>invokevirtual</code>, which uses the vtable at runtime:<br>
+• <code>invokestatic</code> → static method, compile-time resolved (method hiding)<br>
+• <code>invokevirtual</code> → instance method, runtime resolved (overriding)<br>
+• <code>invokespecial</code> → private, constructors, super calls`
+        ]
+      },
+      {
+        q: "Can we override static methods?",
+        tags: ["oop"],
+        answer: `<strong>No — static methods cannot be overridden.</strong> They can only be <em>hidden</em>.<br><br>
+<strong>Why?</strong> Overriding is based on the actual object type at runtime (dynamic dispatch). Static methods belong to the class, not an instance — there's no object type to dispatch on.<br><br>
+<pre><code>class Vehicle {
+    static void type()  { System.out.println("Vehicle"); }
+    void describe()     { System.out.println("I am a vehicle"); }
+}
+class Car extends Vehicle {
+    static void type()  { System.out.println("Car"); }   // hiding
+    @Override
+    void describe()     { System.out.println("I am a car"); }  // true override
+}
+Vehicle v = new Car();
+v.type();      // "Vehicle"  ← method hiding — reference type wins
+v.describe();  // "I am a car" ← true override — object type wins</code></pre>`,
+        tip: "One-liner: static methods are class-level, overriding is instance-level. They're incompatible by definition.",
+        counter: [
+          "Can we override final methods?",
+          "What about private methods?"
+        ],
+        counterAnswers: [
+          `<strong>No — final methods cannot be overridden.</strong><br><br>
+<code>final</code> on a method seals it — no subclass can override it. The JVM can even inline final method calls as a performance optimisation.<br><br>
+<pre><code>class Base {
+    final void lock() { System.out.println("Base locked"); }
+}
+class Derived extends Base {
+    void lock() { ... }  // COMPILE ERROR: Cannot override final method
+}</code></pre>
+<strong>Legitimate uses for final methods:</strong><br>
+• Security: prevent subclasses weakening auth checks — <code>final boolean isAuthenticated()</code><br>
+• Template Method pattern: the skeleton algorithm is final, hooks are overridable<br>
+• Performance: JVM eliminates virtual dispatch overhead for final calls`,
+          `<strong>No — private methods cannot be overridden, and are not inherited.</strong><br><br>
+Private methods are invisible to subclasses. A child method with the same signature is a new, independent method — not an override.<br><br>
+<pre><code>class Parent {
+    private void secret() { System.out.println("Parent secret"); }
+    void run() { secret(); }  // always calls Parent's secret()
+}
+class Child extends Parent {
+    private void secret() { System.out.println("Child secret"); }
+}
+new Child().run();   // "Parent secret" — not Child's version
+new Child().secret(); // "Child secret" — Child's own method, not inherited</code></pre>
+Putting <code>@Override</code> on Child's <code>secret()</code> is a compile error: "Method does not override".`
+        ]
+      },
+      {
+        q: "If a child class overrides a method but still wants parent logic, how will you handle this?",
+        tags: ["oop"],
+        answer: `Use <code>super.methodName()</code> to explicitly call the parent's implementation.<br><br>
+<strong>Real-world example — Logging + Business Logic:</strong><br>
+<pre><code>class BaseService {
+    void process(Order order) {
+        log.info("Processing: " + order.getId());
+        validateOrder(order);
+    }
+}
+class PremiumService extends BaseService {
+    @Override
+    void process(Order order) {
+        super.process(order);         // reuse: parent logging + validation
+        applyPremiumDiscount(order);  // child-specific addition
+        notifyPremiumTeam(order);
+    }
+}</code></pre>
+<strong>Template Method pattern:</strong> Parent defines the skeleton (invariant steps), children call super first then add their specifics.<br><br>
+<strong>Convention:</strong><br>
+• Constructors: <code>super()</code> must be first line<br>
+• Regular methods: <code>super.method()</code> can be anywhere in the body`,
+        tip: "Android's lifecycle methods (onCreate, onResume) almost always call super first. Forgetting super.onCreate() is a classic bug — the template method pattern in real life.",
+        counter: [
+          "What if super() needs to be called conditionally?"
+        ],
+        counterAnswers: [
+          `<strong>For constructors: super() cannot be conditional — it must always be first.</strong><br><br>
+But for <strong>regular method calls</strong>, <code>super.method()</code> CAN be conditional:<br><br>
+<pre><code>class AuditService extends BaseService {
+    @Override
+    void process(Order order) {
+        if (order.requiresAudit()) {
+            super.process(order);  // conditional — valid for regular methods
+        }
+        writeAuditLog(order);  // always runs
+    }
+}</code></pre>
+<strong>Design warning:</strong> Conditional super calls can violate the Liskov Substitution Principle — if callers expect parent logic to always run, skipping it in the child creates unexpected behaviour. Document this explicitly and use with care.`
+        ]
+      },
+      {
+        q: "What happens if the parent method is final?",
+        tags: ["oop"],
+        answer: `If the parent method is <code>final</code>, the child <strong>cannot override it</strong> — compiler throws an error.<br><br>
+<pre><code>class PaymentGateway {
+    final void chargeCard(double amount) {
+        // critical financial logic — must not be altered
+        validateCard();
+        debitAccount(amount);
+        logTransaction(amount);
+    }
+}
+class CustomGateway extends PaymentGateway {
+    @Override
+    void chargeCard(double amount) { ... }  // COMPILE ERROR
+}</code></pre>
+<strong>Child CAN still:</strong><br>
+• Call <code>super.chargeCard(amount)</code> from another method<br>
+• Add completely new methods<br>
+• Override other non-final methods<br><br>
+<strong>Real-world:</strong> Java's <code>String</code> class is entirely <code>final</code>. <code>Thread.getState()</code> is final — JVM controls thread state and no subclass should override it.`,
+        tip: "final method = sealed behaviour. Use it to protect security-sensitive or lifecycle-critical logic that must not be tampered with.",
+        counter: [
+          "What is the use case for final methods?",
+          "Can a final class have abstract methods?"
+        ],
+        counterAnswers: [
+          `<strong>4 legitimate use cases for final methods:</strong><br><br>
+1. <em>Security</em>: Prevent weakening of auth/validation logic<br>
+<pre><code>class AuthService {
+    final boolean isAuthenticated(String token) {
+        return jwtValidator.validate(token);  // must not be overridden
+    }
+}</code></pre>
+2. <em>Performance</em>: JVM can inline final method calls — removes virtual dispatch overhead<br><br>
+3. <em>Template Method pattern</em>: skeleton algorithm is final, hooks are overridable<br>
+<pre><code>abstract class DataProcessor {
+    final void process() { readData(); transform(); writeData(); }
+    abstract void readData();
+    abstract void transform();
+    abstract void writeData();
+}</code></pre>
+4. <em>Invariant enforcement</em>: Methods that must always run exactly one way for correctness`,
+          `<strong>No — final class + abstract methods is a logical contradiction.</strong><br><br>
+<code>abstract</code> methods MUST be overridden by a subclass. <code>final</code> classes CANNOT be subclassed. Both constraints cannot be satisfied simultaneously.<br><br>
+<pre><code>final abstract class Contradiction {  // COMPILE ERROR
+    abstract void doSomething();
+}</code></pre>
+<strong>Valid combinations:</strong><br>
+• <code>final</code> class with concrete methods ✓ (e.g. String)<br>
+• <code>abstract</code> class with <code>final</code> methods ✓ (class is extensible, but these methods are sealed)<br>
+• <code>final</code> method in non-final class ✓ (class is subclassable, this method is sealed)`
+        ]
+      },
+      {
+        q: "You have a Car class and Engine class — which would you use: inheritance or composition?",
+        tags: ["oop", "design"],
+        answer: `<strong>Composition</strong> — always for this case. Car <em>has-a</em> Engine, not <em>is-a</em> Engine.<br><br>
+<strong>Is-a test:</strong> "A Car is an Engine" → ❌ false. Never use inheritance here.<br><br>
+<pre><code>class Engine {
+    private String type;  // petrol, diesel, electric
+    void start() { System.out.println("Engine started: " + type); }
+    void stop()  { System.out.println("Engine stopped"); }
+}
+class Car {
+    private Engine engine;  // Car HAS-A Engine
+    private String model;
+    Car(Engine engine, String model) {
+        this.engine = engine;
+        this.model = model;
+    }
+    void drive() {
+        engine.start();
+        System.out.println(model + " is moving");
+    }
+}
+// Flexible — swap engine without changing Car
+Car petrolCar = new Car(new PetrolEngine(), "Honda City");
+Car electricCar = new Car(new ElectricEngine(), "Tesla Model 3");</code></pre>
+<strong>Benefits:</strong> Swap engine type independently; Engine tested in isolation; Car doesn't expose engine internals.`,
+        tip: "Rule: 'Favour composition over inheritance' (GoF, Effective Java Item 18). Use inheritance ONLY for true is-a relationships where LSP holds.",
+        counter: [
+          "When does composition become better than inheritance?",
+          "What is the Liskov Substitution Principle here?"
+        ],
+        counterAnswers: [
+          `<strong>Composition wins in these 4 scenarios:</strong><br><br>
+1. <em>Behaviour needs to change at runtime</em>: Inheritance is fixed at compile time. Composition lets you swap strategies:<br>
+<code>car.setEngine(new ElectricEngine());</code> — no subclassing needed<br><br>
+2. <em>You'd need multiple inheritance</em>: Java doesn't allow it. Multiple composed fields solve this cleanly.<br><br>
+3. <em>You're inheriting just to reuse methods</em>: That's code reuse, not is-a. Use delegation instead:<br>
+<pre><code>class Logger { void log(String msg) { ... } }
+class OrderService {
+    private Logger logger = new Logger();  // composition, not inheritance
+    void process(Order o) { logger.log("Processing " + o.getId()); }
+}</code></pre>
+4. <em>You don't control the parent class</em>: Parent changes break all subclasses. Composition via interface is far more stable.`,
+          `<strong>LSP (Liskov Substitution Principle):</strong><br>
+"Subtypes must be substitutable for their base type without altering the correctness of the program."<br><br>
+<strong>Car/Engine violation:</strong><br>
+If Car extended Engine, you'd be saying a Car IS an Engine. Calling <code>engine.getDisplacement()</code> on a Car object would be meaningless — a Car doesn't behave like an Engine in all Engine contexts. LSP violation.<br><br>
+<strong>Correct LSP example:</strong><br>
+<pre><code>interface Vehicle { void move(); }
+class Car implements Vehicle      { public void move() { engine.start(); ... } }
+class Bicycle implements Vehicle  { public void move() { pedal(); } }
+
+void startJourney(Vehicle v) { v.move(); }  // LSP holds — any Vehicle works</code></pre>
+Car and Bicycle both fully satisfy the Vehicle contract — substitution is safe anywhere.`
+        ]
+      },
+      {
+        q: "Is method overriding decided at runtime or compile time?",
+        tags: ["oop"],
+        answer: `<strong>Runtime</strong> — resolved by the JVM using <em>dynamic dispatch</em>.<br><br>
+<pre><code>class Animal { void speak() { System.out.println("Animal speaks"); } }
+class Dog extends Animal {
+    @Override
+    void speak() { System.out.println("Dog barks"); }
+}
+Animal a = new Dog();  // reference: Animal, actual object: Dog
+a.speak();             // "Dog barks" — runtime decision based on actual object</code></pre>
+At compile time: compiler only verifies <code>speak()</code> exists on <code>Animal</code>. Does not choose which implementation.<br><br>
+At runtime: JVM looks at actual object in <code>a</code> (Dog), looks up Dog's vtable, finds Dog.speak(), calls it.<br><br>
+This is the foundation of <strong>runtime polymorphism</strong>.`,
+        tip: "The bytecode instruction is invokevirtual — it defers method resolution to runtime via the object's vtable. Understanding this explains every overriding behaviour question.",
+        counter: [
+          "What is dynamic dispatch?",
+          "How does the JVM use vtable for this?"
+        ],
+        counterAnswers: [
+          `<strong>Dynamic dispatch</strong> = JVM determines which method to call at <em>runtime</em>, based on the actual type of the object.<br><br>
+<pre><code>List&lt;Animal&gt; animals = List.of(new Dog(), new Cat(), new Bird());
+for (Animal a : animals) {
+    a.speak();  // dispatches to Dog.speak(), Cat.speak(), Bird.speak() dynamically
+}</code></pre>
+The loop code never changes — but the JVM dispatches each call to the correct class at runtime.<br><br>
+<strong>Why it matters:</strong> This is what makes polymorphism, the Open/Closed Principle, and Dependency Inversion all work. Program to an abstraction, let dynamic dispatch call the right implementation.`,
+          `<strong>vtable (Virtual Method Table) — the JVM's dispatch mechanism:</strong><br><br>
+Every class has a vtable mapping method signatures to their implementations:<br>
+<pre><code>// Animal vtable:
+speak → Animal.speak()
+
+// Dog vtable (inherits + overrides speak):
+speak → Dog.speak()    // ← overwritten entry</code></pre>
+When JVM executes <code>invokevirtual a.speak()</code>:<br>
+1. Find actual type of <code>a</code> at runtime → Dog<br>
+2. Consult Dog's vtable<br>
+3. Find entry for <code>speak</code> → Dog.speak()<br>
+4. Call it<br><br>
+The vtable is built at class loading time. Runtime lookup = one table indirection — extremely fast. Modern JVMs even inline hot callsites, eliminating the lookup entirely.`
+        ]
+      },
+      {
+        q: "Is method overloading decided at runtime or compile time?",
+        tags: ["oop"],
+        answer: `<strong>Compile time</strong> — overloading is resolved entirely by the compiler.<br><br>
+The compiler examines the method name + argument types/count at the call site and picks the best matching overload:<br><br>
+<pre><code>class Printer {
+    void print(int x)    { System.out.println("int: " + x); }
+    void print(double x) { System.out.println("double: " + x); }
+    void print(String x) { System.out.println("String: " + x); }
+}
+Printer p = new Printer();
+p.print(5);       // compiler picks print(int)
+p.print(5.0);     // compiler picks print(double)
+p.print("hello"); // compiler picks print(String)</code></pre>
+This is why overloading is called <strong>static polymorphism</strong> — the binding is static (compile-time). The method descriptor is baked into the bytecode at compile time.`,
+        tip: "One sentence to remember: Overloading = compile-time resolution by method signature. Overriding = runtime resolution by object type.",
+        counter: [
+          "Why can't the compiler always resolve overloading at compile time?"
+        ],
+        counterAnswers: [
+          `<strong>The compiler CAN always resolve overloading — but gets tricky with autoboxing, widening, and varargs combinations.</strong><br><br>
+Overload resolution priority (Java):<br>
+1. Exact match (no conversion)<br>
+2. Widening (int → long → float → double)<br>
+3. Autoboxing (int → Integer)<br>
+4. Varargs<br><br>
+<strong>Widening beats autoboxing:</strong><br>
+<pre><code>void m(Long x)  { System.out.println("Long"); }
+void m(long x)  { System.out.println("long"); }
+int val = 5;
+m(val);  // "long" — widening int→long preferred over boxing int→Long</code></pre>
+<strong>Genuinely ambiguous (compile error):</strong><br>
+<pre><code>void m(int x, Integer y) { }
+void m(Integer x, int y) { }
+m(5, 5);  // COMPILE ERROR — both require one autoboxing, ambiguous</code></pre>`
+        ]
+      },
+      {
+        q: "How does autoboxing affect method overloading?",
+        tags: ["oop", "autoboxing"],
+        answer: `<strong>Autoboxing</strong> is Java's automatic conversion between primitives and wrappers (<code>int ↔ Integer</code>, <code>long ↔ Long</code>).<br><br>
+When resolving overloads, Java prefers <em>widening over autoboxing</em>:<br><br>
+<pre><code>class Demo {
+    static void show(int x)     { System.out.println("int"); }
+    static void show(Integer x) { System.out.println("Integer"); }
+}
+int i = 5;
+show(i);      // "int"     — exact match
+Integer I = 5;
+show(I);      // "Integer" — exact match
+show(5);      // "int"     — literal is int, exact match</code></pre>
+<strong>Widening beats autoboxing:</strong><br>
+<pre><code>class Demo2 {
+    static void show(long x)    { System.out.println("long"); }
+    static void show(Integer x) { System.out.println("Integer"); }
+}
+int i = 5;
+show(i);  // "long" — widening int→long preferred over boxing int→Integer</code></pre>`,
+        tip: "Widening > Autoboxing > Varargs in overload resolution priority. This order explains most trick questions.",
+        counter: [
+          "What is unboxing and when can it throw NullPointerException?"
+        ],
+        counterAnswers: [
+          `<strong>Unboxing</strong> = converting wrapper to primitive: <code>Integer → int</code>.<br><br>
+<strong>NullPointerException from unboxing null:</strong><br>
+<pre><code>Integer x = null;
+int y = x;  // NPE! — JVM calls x.intValue(), but x is null</code></pre>
+<strong>Real-world danger in Maps:</strong><br>
+<pre><code>Map&lt;String, Integer&gt; scores = new HashMap&lt;&gt;();
+int aliceScore = scores.get("Alice");  // NPE — "Alice" absent, get() returns null, unboxed</code></pre>
+<strong>Safe patterns:</strong><br>
+<pre><code>// Option 1: getOrDefault
+int score = scores.getOrDefault("Alice", 0);
+
+// Option 2: null check
+Integer raw = scores.get("Alice");
+int score = (raw != null) ? raw : 0;
+
+// Option 3: Optional
+int score = Optional.ofNullable(scores.get("Alice")).orElse(0);</code></pre>
+Always be suspicious of unboxing from Map.get(), nullable method returns, and nullable fields.`
+        ]
+      },
+      {
+        q: "Can private methods be overridden?",
+        tags: ["oop"],
+        answer: `<strong>No — private methods cannot be overridden.</strong><br><br>
+Private methods are invisible to subclasses. If a child class defines a method with the same name and signature, it is a brand-new independent method — not an override.<br><br>
+<pre><code>class Parent {
+    private void greet() { System.out.println("Hello from Parent"); }
+    void callGreet() { greet(); }  // always calls Parent's greet()
+}
+class Child extends Parent {
+    void greet() { System.out.println("Hello from Child"); }  // NEW method — not override
+}
+Child c = new Child();
+c.callGreet();  // "Hello from Parent" — Parent.callGreet() calls Parent's own greet()
+c.greet();      // "Hello from Child"  — Child's own method</code></pre>
+Adding <code>@Override</code> to Child's <code>greet()</code> causes a compile error — confirming it's not an override.`,
+        tip: "Quick check: put @Override on the child method. If it compiles, it's an override. If compile error — it's not.",
+        counter: [
+          "Can private methods be inherited?",
+          "What happens if a child class defines a method with same name?"
+        ],
+        counterAnswers: [
+          `<strong>No — private methods are not inherited.</strong><br><br>
+Inheritance means the child has access to parent members. Private members are inaccessible even to child classes.<br><br>
+<pre><code>class Parent {
+    private void secret() { System.out.println("secret"); }
+    void reveal() { secret(); }  // OK — same class
+}
+class Child extends Parent {
+    void test() {
+        secret();  // COMPILE ERROR — private access in Parent
+    }
+}</code></pre>
+Child cannot call <code>secret()</code> directly. But it inherits <code>reveal()</code>, which internally calls <code>secret()</code> — so the private method's effect is indirectly inherited through public/protected methods.`,
+          `<strong>It becomes a new, independent method — not an override:</strong><br><br>
+<pre><code>class Parent {
+    private void log() { System.out.println("Parent log"); }
+    void run()         { log(); }  // Parent.run() always calls Parent.log()
+}
+class Child extends Parent {
+    void log() { System.out.println("Child log"); }  // independent, not override
+}
+new Child().run();    // "Parent log" — NOT "Child log"
+new Child().log();    // "Child log"  — Child's own method</code></pre>
+<code>@Override</code> on Child's <code>log()</code> → compile error: "Method does not override method from its superclass". This is the definitive confirmation.`
+        ]
+      },
+      {
+        q: "Why must super() be the first line in a constructor?",
+        tags: ["oop"],
+        answer: `Java enforces that the <strong>parent class is fully initialised before child code runs</strong>. This prevents child code from using uninitialised parent state.<br><br>
+<strong>The problem without this rule:</strong><br>
+<pre><code>class Animal {
+    String type;
+    Animal(String type) { this.type = type; }
+    void display() { System.out.println("Animal: " + type); }
+}
+class Dog extends Animal {
+    Dog() {
+        display();       // DANGEROUS — if super() not called yet, type = null
+        super("Dog");    // Java doesn't allow this — compile error
+    }
+}</code></pre>
+Without the rule, there'd be a window where the object is <em>partially constructed</em> — parent fields are null/zero but child code is running.<br><br>
+<strong>If no explicit super():</strong> Compiler auto-inserts <code>super()</code> (no-arg parent constructor). If no no-arg constructor exists in parent → compile error.`,
+        tip: "Java 22 (JEP 447, preview) finally allows statements before super() in limited cases. Worth mentioning to signal you follow Java evolution.",
+        counter: [
+          "What problem would arise if super() could be called anywhere?",
+          "What if no super() is called explicitly?"
+        ],
+        counterAnswers: [
+          `<strong>Partially constructed object = dangerously undefined state:</strong><br><br>
+<pre><code>class BankAccount {
+    protected double balance;
+    BankAccount(double initial) { this.balance = initial; }
+}
+class SavingsAccount extends BankAccount {
+    SavingsAccount(double initial) {
+        System.out.println(balance);  // 0.0 — parent not initialised yet!
+        super(initial);               // hypothetical mid-constructor call
+        System.out.println(balance);  // now 'initial'
+    }
+}</code></pre>
+Any method call or calculation between the "start" and the delayed super() would see garbage values. In financial systems, this could mean wrong balance calculations, failed null checks, or data corruption.<br><br>
+The strict "super first" rule eliminates this entire class of bugs completely.`,
+          `<strong>Compiler auto-inserts no-arg super() call:</strong><br><br>
+<pre><code>class Animal {
+    Animal() { System.out.println("Animal constructor"); }
+}
+class Dog extends Animal {
+    Dog() {
+        // compiler inserts: super(); here automatically
+        System.out.println("Dog constructor");
+    }
+}
+// Output: "Animal constructor" then "Dog constructor"</code></pre>
+<strong>Compile error when parent has no no-arg constructor:</strong><br>
+<pre><code>class Animal {
+    Animal(String name) { ... }  // only parameterised — no no-arg!
+}
+class Dog extends Animal {
+    Dog() {
+        // compiler tries: super() — but Animal() doesn't exist!
+        // COMPILE ERROR: There is no default constructor available in 'Animal'
+    }
+}</code></pre>
+Fix: add <code>Animal()</code>, or explicitly call <code>super("defaultName")</code> in Dog's constructor.`
+        ]
+      },
+      {
+        q: "Why do we make variables private and create getters/setters?",
+        tags: ["encapsulation"],
+        answer: `This is <strong>encapsulation</strong> — hiding internal state and controlling access to it.<br><br>
+<strong>3 concrete reasons:</strong><br><br>
+1. <em>Validation on write</em>:<br>
+<pre><code>class Employee {
+    private int age;
+    public void setAge(int age) {
+        if (age &lt; 18 || age &gt; 65)
+            throw new IllegalArgumentException("Invalid age: " + age);
+        this.age = age;
+    }
+}</code></pre>
+Without setter, anyone can write <code>emp.age = -5</code>.<br><br>
+2. <em>Computed value on read</em>:<br>
+<pre><code>class Circle {
+    private double radius;
+    public double getArea() { return Math.PI * radius * radius; }
+}</code></pre>
+3. <em>Representation independence</em>: Store in one format, expose in another (e.g., store in cents, return in rupees). Callers don't need to change if storage changes.<br><br>
+4. <em>Read-only / write-only control</em>: Expose getter only = read-only field.`,
+        tip: "The real power isn't the methods — it's the ability to add validation, logging, or change representation later without changing calling code.",
+        counter: [
+          "What if a field should be read-only?",
+          "How would you expose a mutable collection safely?"
+        ],
+        counterAnswers: [
+          `<strong>Provide only a getter — no setter. Use final field for compile-time guarantee:</strong><br><br>
+<pre><code>class Invoice {
+    private final String invoiceId;
+    private final LocalDate createdAt;
+    Invoice(String invoiceId) {
+        this.invoiceId = invoiceId;
+        this.createdAt = LocalDate.now();
+    }
+    public String getInvoiceId()    { return invoiceId; }
+    public LocalDate getCreatedAt() { return createdAt; }
+    // No setters — immutable after creation
+}</code></pre>
+For truly immutable value objects, Java Records (Java 14+) are the modern approach:<br>
+<pre><code>record Invoice(String invoiceId, LocalDate createdAt) {}
+// Auto-generates: getters (invoiceId(), createdAt()), equals, hashCode, toString — all immutable</code></pre>`,
+          `<strong>Return a defensive copy or unmodifiable view:</strong><br><br>
+<pre><code>class Department {
+    private List&lt;Employee&gt; employees = new ArrayList&lt;&gt;();
+
+    // Option 1: Unmodifiable view (reads OK, mutations throw UnsupportedOperationException)
+    public List&lt;Employee&gt; getEmployees() {
+        return Collections.unmodifiableList(employees);
+    }
+
+    // Option 2: Defensive copy (caller gets their own independent copy)
+    public List&lt;Employee&gt; getEmployees() {
+        return new ArrayList&lt;&gt;(employees);
+    }
+
+    // Option 3: Java 10+ immutable copy
+    public List&lt;Employee&gt; getEmployees() {
+        return List.copyOf(employees);
+    }
+}</code></pre>
+<strong>Rule:</strong> Never return the internal reference directly. Caller could call <code>.clear()</code> or <code>.add()</code> and silently corrupt internal state — a class of bug that's extremely hard to trace.`
+        ]
+      },
+      {
+        q: "What happens if we make all variables public instead of private with getters/setters?",
+        tags: ["encapsulation"],
+        answer: `You lose <strong>encapsulation</strong> and the ability to enforce invariants.<br><br>
+<strong>Concrete problems:</strong><br><br>
+1. <em>No validation</em>: Anyone sets invalid state directly<br>
+<pre><code>class BankAccount { public double balance; }
+account.balance = -99999;  // nothing stops this</code></pre>
+2. <em>Impossible to add logic later</em>: Want to log every balance change? You'd need to find every <code>account.balance = x</code> across the whole codebase.<br><br>
+3. <em>Cannot change internal representation</em>: If balance is stored in paise (int) but exposed as rupees (double), public fields lock the representation forever.<br><br>
+4. <em>Thread safety broken</em>: Cannot add synchronisation around a public field. With a setter you can make it <code>synchronized</code> or use an atomic.<br><br>
+5. <em>Breaks library API contracts</em>: A published public field can never be removed or renamed without breaking all callers.`,
+        tip: "Public fields are acceptable ONLY in true value objects with no behaviour (C-style structs). Java records are the modern, safe way to do this.",
+        counter: [
+          "Can you give a real bug that would occur with public fields?"
+        ],
+        counterAnswers: [
+          `<strong>Real bug — Order total desynchronisation:</strong><br><br>
+<pre><code>class Order {
+    public List&lt;Item&gt; items;
+    public double totalAmount;
+}
+// Developer A:
+order.items.add(new Item("Laptop", 50000));
+// Forgot to update totalAmount!
+
+// Developer B reads later:
+System.out.println(order.totalAmount);  // Still 0 — data inconsistency!</code></pre>
+<strong>With encapsulation — invariant enforced:</strong><br>
+<pre><code>class Order {
+    private List&lt;Item&gt; items = new ArrayList&lt;&gt;();
+    private double totalAmount = 0;
+    public void addItem(Item item) {
+        items.add(item);
+        totalAmount += item.getPrice();  // always kept in sync
+    }
+    public double getTotalAmount() { return totalAmount; }
+}</code></pre>
+The invariant "totalAmount = sum of all items prices" is now enforced by the class itself — no external code can ever break it. This exact pattern prevents one of the most common e-commerce production bugs.`
+        ]
+      },
+      {
+        q: "What is abstraction and how is it different from encapsulation?",
+        tags: ["oop"],
+        answer: `Both are OOP pillars but solve different problems:<br><br>
+<strong>Abstraction</strong> = <em>What</em> it does (hide complexity, expose only the interface)<br>
+<strong>Encapsulation</strong> = <em>How</em> it's protected (hide internal state, control access)<br><br>
+<strong>Analogy:</strong> A car's steering wheel and pedals are <em>abstraction</em> (you don't know the hydraulics). The engine locked under the bonnet is <em>encapsulation</em> (internal state you can't directly access).<br><br>
+<strong>Java example:</strong><br>
+<pre><code>// Abstraction: interface hides HOW payment is processed
+interface PaymentProcessor {
+    boolean processPayment(double amount);  // WHAT it does
+}
+// Encapsulation: implementation hides its internal state
+class StripeProcessor implements PaymentProcessor {
+    private String apiKey;           // hidden
+    private HttpClient httpClient;   // hidden
+    public boolean processPayment(double amount) {
+        return callStripeAPI(amount);  // caller doesn't know the internals
+    }
+}</code></pre>`,
+        tip: "One-liner: Abstraction hides complexity at design level (what). Encapsulation hides data at implementation level (how).",
+        counter: [
+          "How does interface achieve abstraction?",
+          "Give a real project example of abstraction."
+        ],
+        counterAnswers: [
+          `<strong>Interface as abstraction contract:</strong><br><br>
+An interface defines <em>what</em> operations are available, hiding <em>how</em> they're done. Callers program to the interface, never the concrete type.<br><br>
+<pre><code>interface NotificationService {
+    void send(String recipient, String message);
+}
+class EmailNotificationService implements NotificationService {
+    public void send(String r, String m) { /* SMTP, templates, retries */ }
+}
+class SMSNotificationService implements NotificationService {
+    public void send(String r, String m) { /* Twilio API, validation */ }
+}
+class OrderService {
+    private NotificationService notifier;  // abstracted — Email or SMS
+    void confirmOrder(Order o) { notifier.send(o.getEmail(), "Confirmed!"); }
+}</code></pre>
+OrderService is completely unaware of Email/SMS specifics. Swap implementations without touching OrderService.`,
+          `<strong>Real project example — Trade Finance:</strong><br><br>
+In our LC platform, we have a <code>DocumentGenerator</code> interface:<br><br>
+<pre><code>interface DocumentGenerator {
+    byte[] generate(LCDetails details, DocumentType type);
+}
+class PDFDocumentGenerator   implements DocumentGenerator { ... }
+class SwiftMessageGenerator  implements DocumentGenerator { ... }</code></pre>
+The LC workflow service calls <code>generator.generate(lcDetails, DocumentType.LC_DRAFT)</code>. It receives bytes — it doesn't know or care whether it's a PDF or a SWIFT MT700 message.<br><br>
+This abstraction let us add the SWIFT generator 6 months after launch without touching the workflow service — just registered a new bean in the Spring context.`
+        ]
+      },
+      {
+        q: "What is the use case of packages?",
+        tags: ["java"],
+        answer: `Packages serve 4 main purposes:<br><br>
+1. <em>Namespace management</em>: Avoid naming conflicts<br>
+<code>com.google.maps.Location</code> and <code>com.myapp.model.Location</code> coexist without collision<br><br>
+2. <em>Access control</em>: Package-private (default) access allows classes in the same package to collaborate without exposing internals to the world<br><br>
+3. <em>Logical organisation</em>: Group related classes — <code>controller</code>, <code>service</code>, <code>repository</code>, <code>model</code><br><br>
+4. <em>Module-level encapsulation</em>: Java 9 modules let packages be exported selectively — internal packages stay hidden from library consumers<br><br>
+<strong>Real project structure:</strong><br>
+<pre><code>com.bank.tradeFinance.lc.controller
+com.bank.tradeFinance.lc.service
+com.bank.tradeFinance.lc.repository
+com.bank.tradeFinance.lc.model
+com.bank.tradeFinance.lc.dto
+com.bank.tradeFinance.lc.exception</code></pre>`,
+        tip: "Package-by-layer (controller/service/repo) vs package-by-feature (lc/tradeloan/guarantee) is a genuine architectural choice. Feature packaging is preferred for microservices — all LC code lives together.",
+        counter: [
+          "What happens if two packages have the same class name?"
+        ],
+        counterAnswers: [
+          `<strong>Both classes coexist — Java uses fully qualified names to distinguish them.</strong><br><br>
+<pre><code>// com.bank.model.Account and com.thirdparty.Account both exist
+
+import com.bank.model.Account;  // import one
+
+// Use the other with full path
+com.thirdparty.Account tpAcc = new com.thirdparty.Account();
+Account bankAcc = new Account();  // uses the imported one</code></pre>
+You can only <code>import</code> one — the other must be referenced by its full package path every time.<br><br>
+<strong>Real example:</strong> <code>java.util.Date</code> and <code>java.sql.Date</code> — same simple name. Legacy codebases using both must always fully qualify one to avoid ambiguity.`
+        ]
+      },
+      {
+        q: "What are different access modifiers in Java?",
+        tags: ["java"],
+        answer: `Java has 4 access levels:<br><br>
+<table style="width:100%;border-collapse:collapse;font-size:13px;margin-top:8px">
+<tr style="background:var(--bg2)">
+  <th style="padding:8px;border:1px solid var(--border);text-align:left">Modifier</th>
+  <th style="padding:8px;border:1px solid var(--border);text-align:center">Same Class</th>
+  <th style="padding:8px;border:1px solid var(--border);text-align:center">Same Package</th>
+  <th style="padding:8px;border:1px solid var(--border);text-align:center">Subclass (diff pkg)</th>
+  <th style="padding:8px;border:1px solid var(--border);text-align:center">Everywhere</th>
+</tr>
+<tr><td style="padding:8px;border:1px solid var(--border)"><code>public</code></td><td style="padding:8px;border:1px solid var(--border);text-align:center">✅</td><td style="padding:8px;border:1px solid var(--border);text-align:center">✅</td><td style="padding:8px;border:1px solid var(--border);text-align:center">✅</td><td style="padding:8px;border:1px solid var(--border);text-align:center">✅</td></tr>
+<tr style="background:var(--bg2)"><td style="padding:8px;border:1px solid var(--border)"><code>protected</code></td><td style="padding:8px;border:1px solid var(--border);text-align:center">✅</td><td style="padding:8px;border:1px solid var(--border);text-align:center">✅</td><td style="padding:8px;border:1px solid var(--border);text-align:center">✅</td><td style="padding:8px;border:1px solid var(--border);text-align:center">❌</td></tr>
+<tr><td style="padding:8px;border:1px solid var(--border)"><em>default</em> (no keyword)</td><td style="padding:8px;border:1px solid var(--border);text-align:center">✅</td><td style="padding:8px;border:1px solid var(--border);text-align:center">✅</td><td style="padding:8px;border:1px solid var(--border);text-align:center">❌</td><td style="padding:8px;border:1px solid var(--border);text-align:center">❌</td></tr>
+<tr style="background:var(--bg2)"><td style="padding:8px;border:1px solid var(--border)"><code>private</code></td><td style="padding:8px;border:1px solid var(--border);text-align:center">✅</td><td style="padding:8px;border:1px solid var(--border);text-align:center">❌</td><td style="padding:8px;border:1px solid var(--border);text-align:center">❌</td><td style="padding:8px;border:1px solid var(--border);text-align:center">❌</td></tr>
+</table><br>
+<strong>Practical guideline:</strong><br>
+• Fields → almost always <code>private</code><br>
+• Internal helpers → <code>private</code> or package-private<br>
+• Framework hooks (Spring, JPA) → <code>protected</code> or package-private<br>
+• Public API → <code>public</code>`,
+        tip: "Principle of Least Privilege: always start with private and relax only when needed. Far harder to restrict access later once code is deployed.",
+        counter: [
+          "What is the default access modifier?",
+          "What can protected access from a different package?"
+        ],
+        counterAnswers: [
+          `<strong>Default (package-private)</strong> — no keyword written, access restricted to the same package.<br><br>
+<pre><code>package com.bank.service;
+class HelperUtil { void compute() { ... } }  // package-private
+
+// com.bank.service.LCService — SAME package, can access
+class LCService { void process() { new HelperUtil().compute(); } }  // OK
+
+// com.bank.controller.LCController — DIFFERENT package, cannot access
+class LCController { void handle() { new HelperUtil().compute(); } }  // COMPILE ERROR</code></pre>
+<strong>Use case:</strong> Default access is perfect for package-internal helpers you want to share within a cohesive package but hide from the outside world.`,
+          `<strong>Protected from a different package — only via inheritance (subclass):</strong><br><br>
+<pre><code>// package com.bank.base
+public class BaseRepository {
+    protected void openConnection() { ... }
+}
+// package com.bank.lc — different package, subclass
+class LCRepository extends BaseRepository {
+    void findLC(String id) {
+        openConnection();  // OK — accessed through inheritance
+    }
+}
+// package com.bank.lc — different package, NOT subclass
+class LCHelper {
+    void help() {
+        new BaseRepository().openConnection();  // COMPILE ERROR — not a subclass
+    }
+}</code></pre>
+Protected = open to subclasses everywhere + open to package-mates regardless of inheritance. From a different package, you MUST subclass to access protected members.`
+        ]
+      },
+      {
+        q: "What happens internally when you create an object using the new keyword?",
+        tags: ["jvm", "memory"],
+        answer: `<code>MyClass obj = new MyClass(args);</code> triggers this sequence:<br><br>
+<strong>1. Class Loading</strong> (if not already loaded)<br>
+ClassLoader finds <code>MyClass.class</code>, loads bytecode into Method Area (Metaspace).<br><br>
+<strong>2. Memory Allocation on Heap</strong><br>
+JVM calculates object size, allocates space in the <strong>Heap</strong>. All fields initialised to defaults (0, null, false).<br><br>
+<strong>3. Instance Initialisers + Field Assignments</strong><br>
+Instance initialiser blocks run first, then explicit field assignments (<code>int x = 5</code>).<br><br>
+<strong>4. Constructor Execution</strong><br>
+<code>super()</code> chain runs top-down (Object → Parent → Child). Constructor body executes.<br><br>
+<strong>5. Reference Assignment</strong><br>
+Heap address of new object is assigned to <code>obj</code> on the Stack.<br><br>
+<strong>Memory layout:</strong><br>
+• <code>obj</code> reference → Stack (current method's stack frame)<br>
+• Object data → Heap (survives method return if referenced elsewhere)<br>
+• Class metadata, static fields → Metaspace`,
+        tip: "This sequence explains why NPE occurs during construction (field not yet set), and why static fields are shared (Metaspace — one copy per class, not per object).",
+        counter: [
+          "Where is the object stored — stack or heap?",
+          "What if the heap is full?"
+        ],
+        counterAnswers: [
+          `<strong>Object data → Heap. Reference variable → Stack.</strong><br><br>
+<pre><code>void createAccount() {
+    BankAccount acc = new BankAccount("Alice", 5000);
+    //    ^                ^
+    //    |                └─ Actual BankAccount object → HEAP
+    //    └─ 'acc' reference → STACK (this method's stack frame)
+}  // stack frame popped — 'acc' reference gone; object on heap survives if referenced elsewhere</code></pre>
+<strong>Stack:</strong> Local variables, references, return addresses. Fast, LIFO, auto-freed on method return.<br>
+<strong>Heap:</strong> All objects. GC-managed. Lives as long as any reference points to the object.<br><br>
+<strong>JVM Escape Analysis optimisation:</strong> If JVM proves an object never escapes the method (no external references), it may allocate it on the stack instead (scalar replacement) — avoiding GC pressure entirely.`,
+          `<strong>JVM throws OutOfMemoryError: Java heap space.</strong><br><br>
+<pre><code>List&lt;byte[]&gt; leak = new ArrayList&lt;&gt;();
+while (true) {
+    leak.add(new byte[1024 * 1024]);  // 1 MB each
+    // GC runs but can't reclaim — references held by 'leak'
+    // → OutOfMemoryError: Java heap space
+}</code></pre>
+<strong>JVM tries GC before OOM:</strong> Runs Full GC (stop-the-world). If still insufficient → throws OOM.<br><br>
+<strong>Diagnosis:</strong><br>
+• <code>-XX:+HeapDumpOnOutOfMemoryError</code> → saves .hprof file<br>
+• Analyse with Eclipse MAT or VisualVM to find retention paths<br>
+• Common causes: static collections growing unbounded, event listeners not deregistered, caches with no eviction`
+        ]
+      },
+      {
+        q: "Can an object be created without calling a constructor?",
+        tags: ["java", "tricky"],
+        answer: `<strong>Yes — 4 ways bypass the constructor:</strong><br><br>
+1. <em>Deserialization</em>: restores object from bytes, constructor never called<br>
+2. <em>Object.clone()</em>: copies field values, bypasses constructor<br>
+3. <em>Reflection via Unsafe / ReflectionFactory</em>: raw memory allocation<br>
+4. <em>Objenesis library</em>: used by Mockito and Spring internally<br><br>
+<pre><code>// Deserialization
+ObjectInputStream ois = new ObjectInputStream(new FileInputStream("acc.ser"));
+BankAccount acc = (BankAccount) ois.readObject();  // constructor NOT called</code></pre>
+<pre><code>// Unsafe (low-level)
+Unsafe unsafe = getUnsafeInstance();
+MyClass obj = (MyClass) unsafe.allocateInstance(MyClass.class);
+// All fields at default values (null/0), constructor never ran</code></pre>
+<strong>Key implication:</strong> If constructor contains validation logic (e.g. "balance ≥ 0"), objects created via deserialization bypass it entirely. Use <code>readObject()</code> to re-validate.`,
+        tip: "Mockito uses Objenesis (which uses Unsafe internally) to create mock objects without constructors — that's how it can mock classes with no no-arg constructor.",
+        counter: [
+          "How does deserialization create objects?",
+          "How does reflection bypass constructors?"
+        ],
+        counterAnswers: [
+          `<strong>Deserialization uses JVM low-level object allocation — no constructor:</strong><br><br>
+<code>ObjectInputStream.readObject()</code> process:<br>
+1. JVM allocates raw memory for the object on heap<br>
+2. Fields are restored directly from the byte stream<br>
+3. Constructor is <strong>never invoked</strong><br><br>
+<strong>Transient fields problem:</strong><br>
+<pre><code>class UserSession implements Serializable {
+    private String userId;
+    private transient HttpSession session;  // not serialized
+    // After deserialization: session = NULL — constructor never ran to set it
+}</code></pre>
+<strong>Re-validate on deserialization:</strong><br>
+<pre><code>class BankAccount implements Serializable {
+    private double balance;
+    private void readObject(ObjectInputStream ois) throws ... {
+        ois.defaultReadObject();  // restore fields
+        if (balance &lt; 0) throw new InvalidObjectException("Negative balance!");
+    }
+}</code></pre>`,
+          `<strong>ReflectionFactory bypasses constructors:</strong><br><br>
+<pre><code>ReflectionFactory rf = ReflectionFactory.getReflectionFactory();
+Constructor objDef = Object.class.getDeclaredConstructor();
+Constructor intConstr = rf.newConstructorForSerialization(MyClass.class, objDef);
+MyClass obj = MyClass.class.cast(intConstr.newInstance());
+// MyClass constructor was NEVER called</code></pre>
+<strong>What frameworks use this for:</strong><br>
+• <em>Mockito</em>: creates proxy objects for mocking without needing constructors<br>
+• <em>Hibernate</em>: instantiates entity classes (requires no-arg constructor by convention, but can use Unsafe)<br>
+• <em>Jackson</em>: deserialises JSON to objects (typically uses no-arg constructor)<br>
+• <em>Spring CGLIB</em>: creates AOP proxies that subclass your beans`
+        ]
+      },
+      {
+        q: "What is the use of the 'this' keyword?",
+        tags: ["java"],
+        answer: `<code>this</code> = reference to the <strong>current object instance</strong>. 4 main uses:<br><br>
+<strong>1. Disambiguate field from parameter:</strong><br>
+<pre><code>class Employee {
+    private String name;
+    Employee(String name) { this.name = name; }  // this.name = field
+}</code></pre>
+<strong>2. Pass current object as argument:</strong><br>
+<pre><code>class Button {
+    void register(ClickHandler h) { ... }
+    void init() { register(this); }  // pass itself as the handler
+}</code></pre>
+<strong>3. Constructor chaining with this():</strong><br>
+<pre><code>class Order {
+    Order() { this("PENDING", LocalDate.now()); }  // delegates to other constructor
+    Order(String status, LocalDate date) { ... }
+}</code></pre>
+<strong>4. Return current instance (fluent builder):</strong><br>
+<pre><code>class QueryBuilder {
+    QueryBuilder where(String cond) { /* add cond */ return this; }
+    // enables: builder.where("x>5").where("y<10")
+}</code></pre>`,
+        tip: "The Builder pattern returns 'this' from every setter — that's what enables fluent chaining: User.builder().name('Alice').age(25).build()",
+        counter: [
+          "Can 'this' be used in a static method?",
+          "What is this() constructor chaining?"
+        ],
+        counterAnswers: [
+          `<strong>No — 'this' cannot be used in a static method.</strong><br><br>
+<code>this</code> refers to the current object instance. Static methods belong to the class, not any instance — there is no "current object".<br><br>
+<pre><code>class MathUtils {
+    private int multiplier = 2;
+    static int doubleIt(int x) {
+        return this.multiplier * x;  // COMPILE ERROR: 'this' in static context
+    }
+}</code></pre>
+<strong>Also why static methods:</strong><br>
+• Cannot access instance fields directly<br>
+• Cannot call instance methods without an object reference<br>
+• Static nested classes don't have access to outer class's <code>this</code> (unlike inner classes)`,
+          `<strong>this() calls another constructor in the same class — avoids duplication:</strong><br><br>
+<pre><code>class LCRequest {
+    private String applicantId;
+    private double amount;
+    private String currency;
+    private String status;
+
+    // Primary constructor
+    LCRequest(String applicantId, double amount, String currency, String status) {
+        this.applicantId = applicantId;
+        this.amount = amount;
+        this.currency = currency;
+        this.status = status;
+    }
+    // Convenience — default status "DRAFT"
+    LCRequest(String applicantId, double amount, String currency) {
+        this(applicantId, amount, currency, "DRAFT");
+    }
+    // Minimal — default currency "USD"
+    LCRequest(String applicantId, double amount) {
+        this(applicantId, amount, "USD");
+    }
+}</code></pre>
+<strong>Rules:</strong> <code>this()</code> must be the first statement in the constructor. Cannot call both <code>super()</code> and <code>this()</code> in the same constructor.`
+        ]
+      },
+      {
+        q: "How does 'this' keyword behave differently inside a lambda vs anonymous inner class?",
+        tags: ["java8", "tricky"],
+        answer: `Key difference:<br><br>
+<strong>Anonymous Inner Class:</strong> <code>this</code> = the anonymous class instance<br>
+<strong>Lambda:</strong> <code>this</code> = the <em>enclosing class</em> instance<br><br>
+<pre><code>class OrderProcessor {
+    String name = "OrderProcessor";
+
+    void process() {
+        // Anonymous inner class — 'this' = Runnable instance
+        Runnable r1 = new Runnable() {
+            public void run() {
+                System.out.println(this.getClass().getSimpleName()); // anonymous class name
+                // System.out.println(this.name); // COMPILE ERROR — no 'name' field here
+            }
+        };
+        // Lambda — 'this' = enclosing OrderProcessor instance
+        Runnable r2 = () -> {
+            System.out.println(this.name);         // "OrderProcessor" — works!
+            System.out.println(this.getClass());   // class OrderProcessor
+        };
+    }
+}</code></pre>
+<strong>Why?</strong> Lambdas are closures over the enclosing scope — not new objects. Anonymous inner classes ARE new objects with their own identity.`,
+        tip: "This difference matters in event handlers/callbacks. Lambda's 'this' calling this.someMethod() reaches the enclosing class's method — usually exactly what you want in service code.",
+        counter: [
+          "What does 'this' refer to inside a Runnable lambda?"
+        ],
+        counterAnswers: [
+          `<strong>'this' inside a lambda = the enclosing class instance.</strong><br><br>
+<pre><code>class NotificationService {
+    private String serviceId = "notif-01";
+    void scheduleReminder() {
+        Runnable r = () -> {
+            // 'this' = NotificationService instance
+            System.out.println("From: " + this.serviceId);
+            this.sendReminder();
+        };
+        new Thread(r).start();
+    }
+    void sendReminder() { System.out.println("Sending..."); }
+}</code></pre>
+<strong>Memory leak warning:</strong> Because the lambda captures <code>this</code> (the outer object), if the lambda is stored in a long-lived static collection, it prevents the enclosing object from being garbage collected.<br><br>
+<strong>Contrast with anonymous class — to access outer, use OuterClass.this:</strong><br>
+<pre><code>Runnable r = new Runnable() {
+    public void run() {
+        // 'this' = the Runnable object
+        NotificationService.this.sendReminder();  // must qualify with outer class
+    }
+};</code></pre>`
+        ]
+      },
+      {
+        q: "What is the use of the 'super' keyword?",
+        tags: ["java"],
+        answer: `<code>super</code> = reference to the <strong>parent class</strong>. 3 uses:<br><br>
+<strong>1. Call parent constructor:</strong><br>
+<pre><code>class SavingsAccount extends BankAccount {
+    private double interestRate;
+    SavingsAccount(String owner, double balance, double rate) {
+        super(owner, balance);     // must be first line
+        this.interestRate = rate;
+    }
+}</code></pre>
+<strong>2. Call parent method (when child has overridden it):</strong><br>
+<pre><code>class PremiumService extends BaseService {
+    @Override
+    void process(Order o) {
+        super.process(o);        // parent validation + logging
+        applyPremiumLogic(o);    // child additions
+    }
+}</code></pre>
+<strong>3. Access parent field (when child shadows it):</strong><br>
+<pre><code>class Child extends Parent {
+    int value = 20;
+    void print() {
+        System.out.println(value);        // Child's: 20
+        System.out.println(super.value);  // Parent's: 10
+    }
+}</code></pre>`,
+        tip: "super.method() is the correct way to 'extend, don't replace' — call parent behaviour then add to it. Fundamental in Spring lifecycle and Android activity callbacks.",
+        counter: [
+          "Can you call super in a static context?",
+          "What is super() vs super.method()?"
+        ],
+        counterAnswers: [
+          `<strong>No — super cannot be used in a static context.</strong><br><br>
+Like <code>this</code>, <code>super</code> is instance-level. It refers to the parent portion of the current object. In a static method there's no current object — both <code>this</code> and <code>super</code> are illegal.<br><br>
+<pre><code>class Child extends Parent {
+    static void staticMethod() {
+        super.someMethod();  // COMPILE ERROR: super in static context
+    }
+    void instanceMethod() {
+        super.someMethod();  // OK
+    }
+}</code></pre>
+Static method hiding doesn't use super/this dispatch at all — resolved entirely at compile time by the reference type.`,
+          `<strong>Two distinct super uses:</strong><br><br>
+<code>super()</code> — calls parent <em>constructor</em>:<br>
+• Must be first statement in constructor<br>
+• Initialises parent state<br>
+<pre><code>class Dog extends Animal {
+    Dog(String name) { super(name); }  // calls Animal(String) constructor
+}</code></pre>
+<code>super.method()</code> — calls parent <em>instance method</em>:<br>
+• Can be anywhere in instance method body<br>
+• Calls parent version of overridden method<br>
+<pre><code>class Dog extends Animal {
+    @Override
+    void speak() {
+        super.speak();  // "Animal speaks"
+        System.out.println("...then Dog barks");
+    }
+}</code></pre>
+<strong>Rule:</strong> <code>super()</code> and <code>this()</code> cannot both appear in the same constructor — only one can be the first line.`
+        ]
+      }
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════
+let readSet = new Set(JSON.parse(localStorage.getItem("pw_read") || "[]"));
+let currentCat = "all";
+let searchQ = "";
+let diffFilter = "all";
+let openQ = null;
+
+function saveRead() { localStorage.setItem("pw_read", JSON.stringify([...readSet])); }
+
+function allQs() {
+  return DATA.flatMap(c => c.questions.map((q, i) => ({...q, catId: c.id, idx: i, key: `${c.id}::${i}`})));
+}
+
+function totalQ() { return DATA.reduce((s, c) => s + c.questions.length, 0); }
+
+// ═══════════════════════════════════════════════════
+//  STATS + PROGRESS
+// ═══════════════════════════════════════════════════
+function updateStats() {
+  const total = totalQ();
+  const done = readSet.size;
+  const pct = total ? Math.round(done / total * 100) : 0;
+  const circumference = 2 * Math.PI * 20; // 125.66
+
+  document.getElementById("statTopics").textContent = DATA.length;
+  document.getElementById("statQuestions").textContent = total;
+  document.getElementById("statRead").textContent = done;
+  document.getElementById("statPct").textContent = pct + "%";
+
+  document.getElementById("ringPct").textContent = pct + "%";
+  document.getElementById("ringSub").textContent = `${done} of ${total} questions`;
+  document.getElementById("ringFill").setAttribute("stroke-dashoffset", circumference - (pct / 100) * circumference);
+}
+
+// ═══════════════════════════════════════════════════
+//  SIDEBAR
+// ═══════════════════════════════════════════════════
+function buildSidebar() {
+  const nav = document.getElementById("sidebarNav");
+  const total = totalQ();
+
+  let html = `
+    <div class="nav-section-label">Navigation</div>
+    <button class="nav-btn ${currentCat === 'all' ? 'active' : ''}" onclick="setCat('all')">
+      <span class="emoji">📚</span>
+      <span class="label">All Topics</span>
+      <span class="nav-count">${total}</span>
+    </button>
+    <div class="nav-section-label" style="margin-top:12px">Topics</div>
+  `;
+
+  DATA.forEach(c => {
+    const done = c.questions.filter((_, i) => readSet.has(`${c.id}::${i}`)).length;
+    html += `
+      <button class="nav-btn ${currentCat === c.id ? 'active' : ''}" onclick="setCat('${c.id}')">
+        <span class="emoji">${c.emoji}</span>
+        <span class="label">${c.title}</span>
+        ${done > 0 ? `<span class="nav-done-count">✓${done}</span>` : ''}
+        <span class="nav-count">${c.questions.length}</span>
+      </button>
+    `;
+  });
+
+  nav.innerHTML = html;
+}
+
+function setCat(id) {
+  currentCat = id;
+  openQ = null;
+  searchQ = "";
+  document.getElementById("searchInput").value = "";
+  document.getElementById("searchClear").style.display = "none";
+  buildSidebar();
+  render();
+  if (window.innerWidth < 768) closeSidebar();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ═══════════════════════════════════════════════════
+//  SEARCH
+// ═══════════════════════════════════════════════════
+document.getElementById("searchInput").addEventListener("input", function () {
+  searchQ = this.value.trim().toLowerCase();
+  document.getElementById("searchClear").style.display = searchQ ? "block" : "none";
+  openQ = null;
+  if (searchQ) currentCat = "all";
+  buildSidebar();
+  render();
+});
+
+function clearSearch() {
+  searchQ = "";
+  document.getElementById("searchInput").value = "";
+  document.getElementById("searchClear").style.display = "none";
+  render();
+}
+
+// ═══════════════════════════════════════════════════
+//  DIFFICULTY FILTER
+// ═══════════════════════════════════════════════════
+function setDiff(level) {
+  diffFilter = level;
+  ["all","easy","medium","hard"].forEach(l => {
+    document.getElementById("pill-" + l).classList.toggle("active", l === level);
+  });
+  render();
+}
+
+// ═══════════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════════
+function render() {
+  updateStats();
+  buildSidebar();
+  const el = document.getElementById("content");
+
+  if (searchQ) { renderSearch(el); return; }
+  if (currentCat === "all") { renderGrid(el); return; }
+
+  const cat = DATA.find(c => c.id === currentCat);
+  if (cat) renderQA(el, cat);
+}
+
+// ── GRID ──
+function renderGrid(el) {
+  let html = `
+    <div class="cat-header">
+      <div class="cat-title-block">
+        <div class="cat-title">All Topics</div>
+      </div>
+      <div class="cat-controls">
+        <button class="btn-ghost" onclick="resetAll()" title="Clear all progress">Reset Progress</button>
+      </div>
+    </div>
+    <div class="concept-grid">
+  `;
+
+  DATA.forEach(c => {
+    const done = c.questions.filter((_, i) => readSet.has(`${c.id}::${i}`)).length;
+    const pct = Math.round(done / c.questions.length * 100);
+    const complete = done === c.questions.length;
+    html += `
+      <div class="concept-card ${complete ? 'all-done' : ''}" onclick="setCat('${c.id}')">
+        <div class="card-top">
+          <div class="card-emoji-wrap">${c.emoji}</div>
+          <span class="card-badge">${c.tag}</span>
+        </div>
+        <div class="card-title">${c.title}</div>
+        <div class="card-desc">${c.description}</div>
+        <div class="card-footer">
+          <span class="card-progress-text ${complete ? 'complete' : ''}">${complete ? '✓ Complete' : `${done}/${c.questions.length}`}</span>
+          <div class="card-progress-wrap">
+            <div class="card-progress-line" style="width:${pct}%"></div>
+          </div>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+  el.innerHTML = html;
+}
+
+// ── QA VIEW ──
+function renderQA(el, cat) {
+  const done = cat.questions.filter((_, i) => readSet.has(`${cat.id}::${i}`)).length;
+  let questions = cat.questions;
+  if (diffFilter !== "all") questions = questions.filter(q => q.difficulty === diffFilter);
+
+  let html = `
+    <div class="cat-header">
+      <div class="cat-title-block">
+        <div class="cat-eyebrow" onclick="setCat('all')">← All Topics</div>
+        <div class="cat-title">${cat.emoji} ${cat.title}</div>
+      </div>
+      <div class="cat-controls">
+        <button class="btn-ghost" onclick="markAllDone('${cat.id}')">Mark all read</button>
+        <button class="btn-ghost" onclick="resetCat('${cat.id}')">Reset</button>
+      </div>
+    </div>
+    <div class="qa-intro">
+      <div class="qa-intro-emoji">${cat.emoji}</div>
+      <div class="qa-intro-body">
+        <div class="qa-intro-title">${cat.emoji} ${cat.title}</div>
+        ${cat.freq ? `<div class="freq-badge" style="margin:4px 0 6px">🔥 ${cat.freq}</div>` : ''}
+        <div class="qa-intro-desc">${cat.description}</div>
+      </div>
+      <div class="qa-intro-stats">
+        <div>
+          <div class="qa-stat-num">${cat.questions.length}</div>
+          <div class="qa-stat-label">Questions</div>
+        </div>
+        <div>
+          <div class="qa-stat-num" style="color:var(--green)">${done}</div>
+          <div class="qa-stat-label">Studied</div>
+        </div>
+      </div>
+    </div>
+    <div class="q-list">
+  `;
+
+  if (questions.length === 0) {
+    html += `<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-h">No questions match</div><div class="empty-sub">Try a different difficulty filter.</div></div>`;
+  } else {
+    questions.forEach((item, qi) => {
+      const realIdx = cat.questions.indexOf(item);
+      const key = `${cat.id}::${realIdx}`;
+      const isRead = readSet.has(key);
+      const isOpen = openQ === key;
+      html += qCard(item, qi + 1, key, isRead, isOpen);
+    });
+  }
+
+  html += `</div>`;
+  el.innerHTML = html;
+}
+
+// ── SEARCH ──
+function renderSearch(el) {
+  let results = [];
+  DATA.forEach(cat => {
+    cat.questions.forEach((item, i) => {
+      const match = item.q.toLowerCase().includes(searchQ)
+        || (item.tags || []).some(t => t.includes(searchQ))
+        || cat.title.toLowerCase().includes(searchQ)
+        || item.answer.toLowerCase().includes(searchQ);
+      if (match && (diffFilter === "all" || item.difficulty === diffFilter)) {
+        results.push({ cat, item, i, key: `${cat.id}::${i}` });
+      }
+    });
+  });
+
+  let html = `
+    <div class="search-result-header">
+      <div class="search-result-title">Search Results</div>
+      <div class="result-meta">${results.length} result${results.length !== 1 ? "s" : ""} for "<strong>${escHtml(searchQ)}</strong>"</div>
+    </div>
+    <div class="q-list">
+  `;
+
+  if (results.length === 0) {
+    html += `<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-h">No results found</div><div class="empty-sub">Try different keywords.</div></div>`;
+  } else {
+    results.forEach(({ cat, item, i, key }, qi) => {
+      const isRead = readSet.has(key);
+      const isOpen = openQ === key;
+      const cardHtml = qCard(item, qi + 1, key, isRead, isOpen, cat);
+      html += cardHtml;
+    });
+  }
+
+  html += `</div>`;
+  el.innerHTML = html;
+}
+
+function toggleFU(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle("open");
+}
+
+// ── Q CARD HTML ──
+function qCard(item, num, key, isRead, isOpen, cat = null) {
+  const tags = (item.tags || []).map(t => `<span class="q-tag">${t}</span>`).join("");
+  const catLabel = cat ? `<div class="result-concept-label">${cat.emoji} ${cat.title}</div>` : "";
+  const diffHtml = item.difficulty ? `<span class="diff-badge diff-${item.difficulty}">${item.difficulty}</span>` : '';
+
+  let followupsHtml = '';
+  if (item.counter && item.counter.length > 0) {
+    const fuItems = item.counter.map((fu, fi) => {
+      const fuKey = `fu_${key.replace(/::/g,'_')}_${fi}`;
+      const fuAnswer = item.counterAnswers && item.counterAnswers[fi];
+      if (!fuAnswer) return `<div class="followup-item"><div class="followup-q-row" style="cursor:default"><span class="followup-q-icon">↩</span><span class="followup-q-text">${fu}</span></div></div>`;
+      return `<div class="followup-item" id="${fuKey}"><div class="followup-q-row" onclick="toggleFU('${fuKey}')"><span class="followup-q-icon">↩</span><span class="followup-q-text">${fu}</span><span class="followup-chevron">▾</span></div><div class="followup-answer"><div class="followup-answer-inner">${fuAnswer}</div></div></div>`;
+    }).join('');
+    followupsHtml = `<div class="followups"><div class="followups-label">⚡ Follow-up Questions</div>${fuItems}</div>`;
+  }
+
+  const followupBadge = item.counter && item.counter.length ? `<span style="font-family:var(--font-mono);font-size:10px;color:var(--amber);background:#fff7ed;border:1px solid #fed7aa;padding:2px 7px;border-radius:20px">↩ ${item.counter.length} follow-up${item.counter.length > 1 ? 's' : ''}</span>` : '';
+
+  return `
+    <div class="q-card ${isRead ? 'read' : ''} ${isOpen ? 'open' : ''}" id="qc_${key.replace(/::/g,'_')}">
+      <div class="q-card-header" onclick="toggleQ('${key}')">
+        <div class="q-num">${String(num).padStart(2,'0')}</div>
+        <div class="q-body">
+          ${catLabel}
+          <div class="q-text">${item.q}</div>
+          <div class="q-meta">
+            ${diffHtml}
+            <div class="q-tags">${tags}</div>
+            ${followupBadge}
+          </div>
+        </div>
+        <div class="q-right">
+          <button class="read-btn ${isRead ? 'marked' : ''}" onclick="toggleRead(event,'${key}')">
+            <span>${isRead ? '✓' : '○'}</span>
+            <span>${isRead ? 'Studied' : 'Mark read'}</span>
+          </button>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="q-answer">
+        <div class="q-answer-inner">
+          <div class="answer-label">Answer</div>
+          <div class="answer-body">${item.answer || '<em style="color:var(--ink3)">Answer coming soon…</em>'}</div>
+          ${item.tip ? `<div class="tip-box"><div class="tip-label">💡 Interview Tip</div><div class="tip-body">${item.tip}</div></div>` : ''}
+          ${followupsHtml}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════
+//  ACTIONS
+// ═══════════════════════════════════════════════════
+function toggleQ(key) {
+  const safeKey = key.replace(/::/g, '_');
+  const el = document.getElementById("qc_" + safeKey);
+  if (!el) return;
+  if (openQ === key) {
+    openQ = null;
+    el.classList.remove("open");
+  } else {
+    if (openQ) {
+      const prev = document.getElementById("qc_" + openQ.replace(/::/g, '_'));
+      if (prev) prev.classList.remove("open");
+    }
+    openQ = key;
+    el.classList.add("open");
+  }
+}
+
+function toggleRead(e, key) {
+  e.stopPropagation();
+  if (readSet.has(key)) readSet.delete(key);
+  else readSet.add(key);
+  saveRead();
+  updateStats();
+  buildSidebar();
+  // update just the button + card
+  const safeKey = key.replace(/::/g, '_');
+  const card = document.getElementById("qc_" + safeKey);
+  if (!card) return;
+  const isRead = readSet.has(key);
+  card.classList.toggle("read", isRead);
+  const btn = card.querySelector(".read-btn");
+  if (btn) {
+    btn.classList.toggle("marked", isRead);
+    btn.innerHTML = `<span>${isRead ? '✓' : '○'}</span><span>${isRead ? 'Studied' : 'Mark read'}</span>`;
+  }
+  // Update hero stat
+  document.getElementById("statRead").textContent = readSet.size;
+  document.getElementById("statPct").textContent = Math.round(readSet.size / totalQ() * 100) + "%";
+}
+
+function markAllDone(catId) {
+  const cat = DATA.find(c => c.id === catId);
+  if (!cat) return;
+  cat.questions.forEach((_, i) => readSet.add(`${catId}::${i}`));
+  saveRead();
+  render();
+}
+
+function resetCat(catId) {
+  const cat = DATA.find(c => c.id === catId);
+  if (!cat) return;
+  cat.questions.forEach((_, i) => readSet.delete(`${catId}::${i}`));
+  saveRead();
+  render();
+}
+
+function resetAll() {
+  if (!confirm("Reset all progress?")) return;
+  readSet.clear();
+  saveRead();
+  render();
+}
+
+// ═══════════════════════════════════════════════════
+//  SIDEBAR TOGGLE (mobile)
+// ═══════════════════════════════════════════════════
+function toggleSidebar() {
+  document.getElementById("sidebar").classList.toggle("open");
+  document.getElementById("overlay").classList.toggle("open");
+}
+
+function closeSidebar() {
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("overlay").classList.remove("open");
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+// ═══════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════
+render();
+</script>
+</body>
+</html>
