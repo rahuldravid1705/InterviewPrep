@@ -2641,7 +2641,7 @@ Static method hiding doesn't use super/this dispatch at all — resolved entirel
   },
   {
   id:"s3", emoji:"🗂️", title:"Collections",
-  desc:"HashMap, ArrayList, HashSet, iterators, Comparator vs Comparable.",
+  description:"HashMap, ArrayList, HashSet, iterators, Comparator vs Comparable.",
   freq:"🔥 Asked in 12/14 interviews",
   questions:[
     {
@@ -2914,7 +2914,7 @@ Uniqueness is guaranteed because HashMap keys are unique (uses hashCode + equals
 },
 {
   id:"s4", emoji:"🔤", title:"String & Immutability",
-  desc:"String pool, StringBuilder, immutable class design.",
+  description:"String pool, StringBuilder, immutable class design.",
   freq:"⭐ Very commonly asked",
   questions:[
     {
@@ -3051,7 +3051,7 @@ System.out.<span class="method">println</span>(s1 == s4); <span class="comment">
 },
 {
   id:"s5", emoji:"⚠️", title:"Exception Handling",
-  desc:"Checked vs unchecked, custom exceptions, best practices.",
+  description:"Checked vs unchecked, custom exceptions, best practices.",
   freq:"⭐ Asked in 10/14 interviews",
   questions:[
     {
@@ -3196,7 +3196,7 @@ This is considered <strong>bad practice</strong>. Use finally only for cleanup (
 },
 {
   id:"s6", emoji:"🔄", title:"Multithreading & Concurrency",
-  desc:"Threads, synchronization, locks, atomic classes, ExecutorService.",
+  description:"Threads, synchronization, locks, atomic classes, ExecutorService.",
   freq:"⭐ Deep dives common",
   questions:[
     {
@@ -3437,7 +3437,7 @@ Preferred over <code>synchronized int</code> for simple counters — no lock ove
 },
 {
   id:"s7", emoji:"☕", title:"Java 8 Features",
-  desc:"Lambda, functional interfaces, Optional, Stream API, date/time.",
+  description:"Lambda, functional interfaces, Optional, Stream API, date/time.",
   freq:"⭐ Coding questions in 13/14 interviews",
   questions:[
     {
@@ -3620,7 +3620,7 @@ list.<span class="method">stream</span>().<span class="method">map</span>(<span 
 },
 {
   id:"s8", emoji:"🏗️", title:"Design Patterns",
-  desc:"Singleton, Factory, Strategy, Observer, Saga, Circuit Breaker.",
+  description:"Singleton, Factory, Strategy, Observer, Saga, Circuit Breaker.",
   freq:"⭐ Deep questions common",
   questions:[
     {
@@ -3780,7 +3780,7 @@ cancelOrder()   refundPayment()     releaseItems()
 },
 {
   id:"s9", emoji:"🌱", title:"Spring Framework",
-  desc:"IoC, DI, BeanFactory vs ApplicationContext.",
+  description:"IoC, DI, BeanFactory vs ApplicationContext.",
   freq:"⭐ Foundation questions",
   questions:[
     {
@@ -3840,7 +3840,7 @@ ApplicationContext extends BeanFactory and adds enterprise features. You almost 
 },
 {
   id:"s10", emoji:"🥾", title:"Spring Boot Fundamentals",
-  desc:"Auto-configuration, annotations, starters, bean management.",
+  description:"Auto-configuration, annotations, starters, bean management.",
   freq:"🔥 Asked in 11/14 interviews",
   questions:[
     {
@@ -4054,7 +4054,7 @@ management.endpoint.health.show-details=always
 },
 {
   id:"s11", emoji:"⚙️", title:"Spring Boot Advanced",
-  desc:"Profiles, configuration, properties, YAML, externalized config.",
+  description:"Profiles, configuration, properties, YAML, externalized config.",
   freq:"⭐ Follow-up heavy",
   questions:[
     {
@@ -4112,7 +4112,7 @@ spring.datasource.url=jdbc:postgresql://prod-server/appdb
 },
 {
   id:"s12", emoji:"🌐", title:"REST API Development",
-  desc:"REST design, request/response handling, validation, versioning.",
+  description:"REST design, request/response handling, validation, versioning.",
   freq:"⭐ Practical questions",
   questions:[
     {
@@ -4228,7 +4228,7 @@ spring.datasource.url=jdbc:postgresql://prod-server/appdb
 },
 {
   id:"s13", emoji:"🗄️", title:"Spring Data JPA & Hibernate",
-  desc:"Repositories, fetch types, relationships, N+1, transactions.",
+  description:"Repositories, fetch types, relationships, N+1, transactions.",
   freq:"🔥 Asked in 8/14 interviews",
   questions:[
     {
@@ -4366,7 +4366,7 @@ Call → AOP Proxy → begin transaction
 },
 {
   id:"s14", emoji:"💾", title:"Database & SQL",
-  desc:"Query optimization, indexing, sharding, migrations.",
+  description:"Query optimization, indexing, sharding, migrations.",
   freq:"⭐ Often scenario-based",
   questions:[
     {
@@ -4419,7 +4419,7 @@ Call → AOP Proxy → begin transaction
 },
 {
   id:"s15", emoji:"🔬", title:"Microservices Architecture",
-  desc:"Design principles, monolith vs microservices, database sharing.",
+  description:"Design principles, monolith vs microservices, database sharing.",
   freq:"⭐ Architecture questions",
   questions:[
     {
@@ -4468,7 +4468,7 @@ Call → AOP Proxy → begin transaction
 },
 {
   id:"s16", emoji:"📡", title:"Microservices Communication",
-  desc:"REST, Kafka, RabbitMQ, service discovery, API Gateway.",
+  description:"REST, Kafka, RabbitMQ, service discovery, API Gateway.",
   freq:"🔥 Asked in 10/14 interviews",
   questions:[
     {
@@ -4552,7 +4552,7 @@ OrderService → calls UserService directly (client-side load balancing)
 },
 {
   id:"s17", emoji:"🛡️", title:"Microservices Resilience",
-  desc:"Circuit breaker, retry, timeout, Saga pattern.",
+  description:"Circuit breaker, retry, timeout, Saga pattern.",
   freq:"⭐ Deep dives common",
   questions:[
     {
@@ -4612,7 +4612,7 @@ resilience4j.retry.instances.inventoryService:
 },
 {
   id:"s18", emoji:"🔒", title:"Spring Security",
-  desc:"Authentication, authorization, JWT, OAuth2, method security.",
+  description:"Authentication, authorization, JWT, OAuth2, method security.",
   freq:"⭐ JWT always asked",
   questions:[
     {
@@ -4671,7 +4671,7 @@ Signature: HMAC-SHA256(header+"."+payload, secret)
 },
 {
   id:"s19", emoji:"🧪", title:"Testing",
-  desc:"JUnit 5, Mockito, integration testing, code coverage.",
+  description:"JUnit 5, Mockito, integration testing, code coverage.",
   freq:"⭐ Often practical",
   questions:[
     {
@@ -4731,7 +4731,7 @@ Signature: HMAC-SHA256(header+"."+payload, secret)
 },
 {
   id:"s22", emoji:"🐳", title:"DevOps & Deployment",
-  desc:"Docker, Kubernetes, CI/CD, AWS, SonarQube.",
+  description:"Docker, Kubernetes, CI/CD, AWS, SonarQube.",
   freq:"⭐ Cloud questions rising",
   questions:[
     {
@@ -4782,7 +4782,7 @@ Tools: GitHub Actions, Jenkins, GitLab CI, ArgoCD (for Kubernetes GitOps).`,
 },
 {
   id:"s23", emoji:"⚡", title:"Caching",
-  desc:"Spring caching annotations, Redis, cache invalidation.",
+  description:"Spring caching annotations, Redis, cache invalidation.",
   freq:"⭐ Often overlooked topic",
   questions:[
     {
@@ -4824,7 +4824,7 @@ For distributed caching, configure Redis: add spring-boot-starter-data-redis, se
 },
 {
   id:"s25", emoji:"💻", title:"Stream API Coding",
-  desc:"Practical coding problems using Java 8 Streams.",
+  description:"Practical coding problems using Java 8 Streams.",
   freq:"🔥 Asked in 13/14 interviews — always prepare this",
   questions:[
     {
@@ -5030,7 +5030,7 @@ freq.<span class="method">entrySet</span>().<span class="method">stream</span>()
 },
 {
   id:"s26", emoji:"🎯", title:"Scenario-Based",
-  desc:"Real-world architecture and troubleshooting challenges.",
+  description:"Real-world architecture and troubleshooting challenges.",
   freq:"⭐ Closing round questions",
   questions:[
     {
@@ -5099,7 +5099,7 @@ SELECT * FROM orders WHERE id > :lastSeenId ORDER BY id LIMIT 20;
 },
 {
   id:"s27", emoji:"🧠", title:"Behavioral Questions",
-  desc:"Teamwork, problem-solving, growth mindset, communication.",
+  description:"Teamwork, problem-solving, growth mindset, communication.",
   freq:"⭐ Last 10 minutes of interview",
   questions:[
     {
